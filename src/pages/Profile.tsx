@@ -1,4 +1,4 @@
-import { MapPin, Link as LinkIcon, Calendar, Star, GitFork, Users } from "lucide-react";
+import { MapPin, Link as LinkIcon, Calendar, Star, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

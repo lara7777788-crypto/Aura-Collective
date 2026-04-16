@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap, Github, Twitter } from "lucide-react";
+import { Zap } from "lucide-react";
 
 const Footer = () => (
   <footer className="border-t bg-muted/30">

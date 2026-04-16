@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ProjectDetail = () => {
-  const { id } = useParams();
+  const { id: _id } = useParams();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">

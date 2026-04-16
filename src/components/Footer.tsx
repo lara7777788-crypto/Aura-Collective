@@ -18,8 +18,8 @@ const Footer = () => (
             The open infrastructure for Web4 developers.
           </p>
           <div className="mt-4 flex gap-3">
-            <a href="#" className="text-muted-foreground hover:text-secondary transition-colors"><Github className="h-5 w-5" /></a>
-            <a href="#" className="text-muted-foreground hover:text-secondary transition-colors"><Twitter className="h-5 w-5" /></a>
+            <a href="#" className="text-muted-foreground hover:text-secondary transition-colors text-sm font-medium">GitHub</a>
+            <a href="#" className="text-muted-foreground hover:text-secondary transition-colors text-sm font-medium">Twitter</a>
           </div>
         </div>
         <div>

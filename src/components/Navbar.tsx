@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Zap } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Zap, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const navLinks = [
   { label: "Explore", path: "/explore" },
@@ -13,6 +15,15 @@ const navLinks = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Signed out");
+    navigate("/");
+    setMobileOpen(false);
+  };
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
@@ -44,14 +55,27 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link to="/sign-in">
-            <Button variant="ghost" size="sm">Sign In</Button>
-          </Link>
-          <Link to="/sign-up">
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
-              Get Started
-            </Button>
-          </Link>
+          {user ? (
+            <>
+              <Link to="/dashboard">
+                <Button variant="ghost" size="sm" className="gap-2"><LayoutDashboard className="h-4 w-4" />Dashboard</Button>
+              </Link>
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
+                <LogOut className="h-4 w-4" /> Sign Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/sign-in">
+                <Button variant="ghost" size="sm">Sign In</Button>
+              </Link>
+              <Link to="/sign-up">
+                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
+                  Get Started
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -78,12 +102,25 @@ const Navbar = () => {
               </Link>
             ))}
             <hr className="my-2 border-border" />
-            <Link to="/sign-in" onClick={() => setMobileOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start">Sign In</Button>
-            </Link>
-            <Link to="/sign-up" onClick={() => setMobileOpen(false)}>
-              <Button className="w-full bg-primary text-primary-foreground font-semibold">Get Started</Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/dashboard" onClick={() => setMobileOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start gap-2"><LayoutDashboard className="h-4 w-4" />Dashboard</Button>
+                </Link>
+                <Button variant="outline" className="w-full justify-start gap-2" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" /> Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/sign-in" onClick={() => setMobileOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">Sign In</Button>
+                </Link>
+                <Link to="/sign-up" onClick={() => setMobileOpen(false)}>
+                  <Button className="w-full bg-primary text-primary-foreground font-semibold">Get Started</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

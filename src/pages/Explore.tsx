@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Search, Star, GitFork, Download, Filter } from "lucide-react";
+import { Search, GitFork, Download, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import StarButton from "@/components/StarButton";
 
 const categories = ["All", "Models", "Code", "Datasets", "Tools"];
 
@@ -80,7 +81,7 @@ const Explore = () => {
                 ))}
               </div>
               <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.stars.toLocaleString()}</span>
+                <StarButton projectId={p.id} initialCount={p.stars} />
                 <span className="flex items-center gap-1"><GitFork className="h-3.5 w-3.5" /> {p.forks}</span>
                 <span className="flex items-center gap-1"><Download className="h-3.5 w-3.5" /> {p.downloads}</span>
               </div>

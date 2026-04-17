@@ -1,11 +1,12 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Star, Download, Eye, Calendar, User } from "lucide-react";
+import { ArrowLeft, Download, Eye, Calendar, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import StarButton from "@/components/StarButton";
 
 const ProjectDetail = () => {
-  const { id: _id } = useParams();
+  const { id } = useParams();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -60,9 +61,7 @@ output = model.generate("Explain Web4 in simple terms")`}
               <Button className="w-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 gap-2">
                 <Download className="h-4 w-4" /> Download
               </Button>
-              <Button variant="outline" className="w-full gap-2">
-                <Star className="h-4 w-4" /> Star
-              </Button>
+              <StarButton projectId={id ?? ""} initialCount={1240} variant="full" />
               <div className="grid grid-cols-2 gap-3 pt-2 border-t">
                 <div className="text-center">
                   <p className="text-xl font-bold text-foreground">1,240</p>

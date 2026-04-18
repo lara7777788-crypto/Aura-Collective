@@ -12,6 +12,7 @@ import Community from "./pages/Community";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/about" element={<About />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

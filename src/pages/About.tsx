@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Shield, Users, Lock, Eye, Heart, Scale, Handshake, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import CosmicBackdrop from "@/components/CosmicBackdrop";
 
 const values = [
   { icon: Lock, title: "Your Data Is Your Own", desc: "We don't sell or use your data — ever. We don't store data without permission, and you can remove it at any time." },
@@ -30,22 +31,25 @@ const fadeUp = {
 const About = () => (
   <>
     {/* Hero */}
-    <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background">
-      <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
+    <section className="relative overflow-hidden">
+      <CosmicBackdrop />
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
         <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary ring-1 ring-secondary/20 mb-6">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/15 px-4 py-1.5 text-xs font-semibold text-secondary ring-1 ring-secondary/30 mb-6">
             <Sparkles className="h-3 w-3" /> Our Agreement With You
           </span>
         </motion.div>
         <motion.h1
-          className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl"
+          className="text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl"
           initial="hidden" animate="visible" variants={fadeUp} custom={1}
         >
           Building a better internet,{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">together</span>
+          <span className="italic font-serif bg-gradient-to-r from-secondary via-purple-500 to-primary bg-clip-text text-transparent">
+            together
+          </span>
         </motion.h1>
         <motion.p
-          className="mx-auto mt-5 max-w-2xl text-base text-muted-foreground sm:text-lg"
+          className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
           initial="hidden" animate="visible" variants={fadeUp} custom={2}
         >
           AuraCollective is the open infrastructure for Web4 — a decentralized web built on peer-to-peer governance, collaboration, and a single core value: <strong className="text-foreground">your data is your own.</strong>
@@ -54,18 +58,25 @@ const About = () => (
     </section>
 
     {/* Values */}
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-      <div className="text-center mb-12">
-        <h2 className="text-2xl font-bold text-foreground sm:text-3xl">What we stand for</h2>
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+      <div className="text-center mb-14">
+        <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+          What we <span className="italic font-serif text-secondary">stand for</span>
+        </h2>
         <p className="mt-3 text-muted-foreground">Six principles that shape every decision we make.</p>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {values.map((v, i) => (
           <motion.div key={v.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-            <Card className="h-full border-border/60 hover:border-secondary/40 transition-colors">
+            <Card className="h-full rounded-2xl border-2 border-border bg-card/80 backdrop-blur transition-all hover:-translate-y-1 hover:border-secondary/60 hover:shadow-[6px_6px_0_hsl(var(--secondary)/0.3)]">
               <CardContent className="pt-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary mb-4">
-                  <v.icon className="h-6 w-6" />
+                <div
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl text-foreground mb-4 ring-2 ring-white/40"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(320 90% 80%), hsl(280 80% 65%), hsl(48 95% 65%))",
+                  }}
+                >
+                  <v.icon className="h-7 w-7 text-white drop-shadow" />
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">{v.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{v.desc}</p>
@@ -77,14 +88,17 @@ const About = () => (
     </section>
 
     {/* User Agreement */}
-    <section className="bg-muted/30 py-16 sm:py-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+    <section className="relative overflow-hidden bg-muted/30 py-20 sm:py-28">
+      <CosmicBackdrop variant="soft" />
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">The User Agreement</h2>
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            The <span className="italic font-serif text-secondary">User Agreement</span>
+          </h2>
           <p className="mt-3 text-muted-foreground">A plain-language agreement between us and you.</p>
         </div>
 
-        <Card className="border-border/60">
+        <Card className="rounded-2xl border-2 border-foreground bg-card/90 backdrop-blur shadow-[6px_6px_0_hsl(var(--secondary)/0.4)]">
           <CardContent className="pt-8 space-y-8">
             <div>
               <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">

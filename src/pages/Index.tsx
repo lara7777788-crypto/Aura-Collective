@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Box, Code2, Database, Users, Star, GitFork, Check } from "lucide-react";
+import { ArrowRight, Box, Code2, Database, Users, Sparkles, GitFork, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
@@ -12,96 +12,115 @@ const stats = [
 ];
 
 const pillars = [
-  {
-    icon: Box,
-    title: "Models",
-    desc: "Host, version, and share AI models with built-in inference endpoints.",
-  },
-  {
-    icon: Code2,
-    title: "Code",
-    desc: "Publish projects, collaborate with pull requests, and ship faster.",
-  },
-  {
-    icon: Database,
-    title: "Datasets",
-    desc: "Store, discover, and share datasets for training and evaluation.",
-  },
+  { icon: Box, title: "Models", desc: "Host, version, and share AI models with built-in inference endpoints." },
+  { icon: Code2, title: "Code", desc: "Publish projects, collaborate with pull requests, and ship faster." },
+  { icon: Database, title: "Datasets", desc: "Store, discover, and share datasets for training and evaluation." },
 ];
 
 const tiers = [
   {
-    name: "Free",
+    name: "Spark",
     price: "$0",
-    desc: "Get started with the essentials",
+    desc: "Begin your aura",
     features: ["3 public projects", "Community access", "Basic model hosting", "1 GB storage"],
-    cta: "Start Free",
-    highlight: false,
+    cta: "Start Sparking",
+    rotate: "-rotate-2",
+    accent: "bg-primary",
   },
   {
-    name: "Pro",
+    name: "Glow",
     price: "$9",
-    desc: "For serious builders",
-    features: ["Unlimited projects", "Private repos", "Advanced analytics", "10 GB storage", "Priority support", "Pro badge"],
-    cta: "Upgrade to Pro",
+    desc: "For radiant builders",
+    features: ["Unlimited projects", "Private repos", "Advanced analytics", "10 GB storage", "Priority support", "Glow badge"],
+    cta: "Light it up",
+    rotate: "rotate-1",
+    accent: "bg-secondary",
     highlight: true,
   },
   {
-    name: "Team",
+    name: "Constellation",
     price: "$29",
-    desc: "Scale with your team",
-    features: ["Everything in Pro", "Org profiles", "Team collaboration", "50 GB storage", "Admin controls", "SSO support"],
-    cta: "Start Team Trial",
-    highlight: false,
+    desc: "Move as a galaxy",
+    features: ["Everything in Glow", "Org profiles", "Team collaboration", "50 GB storage", "Admin controls", "SSO support"],
+    cta: "Form your galaxy",
+    rotate: "-rotate-1",
+    accent: "bg-foreground",
   },
 ];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5 },
-  }),
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
 };
 
 const Index = () => (
   <>
-    {/* Hero */}
-    <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background">
-      <div className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 sm:py-28">
+    {/* Hero — cosmic dreamy */}
+    <section className="relative overflow-hidden">
+      {/* Drifting gradient blobs */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div
+          className="absolute -top-24 -left-20 h-80 w-80 rounded-full opacity-60 blur-3xl animate-blob-drift"
+          style={{ background: "radial-gradient(circle, hsl(var(--secondary)/0.7), transparent 70%)" }}
+        />
+        <div
+          className="absolute top-10 right-0 h-96 w-96 rounded-full opacity-50 blur-3xl animate-blob-drift"
+          style={{ background: "radial-gradient(circle, hsl(280 85% 65% / 0.6), transparent 70%)", animationDelay: "-6s" }}
+        />
+        <div
+          className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full opacity-40 blur-3xl animate-blob-drift"
+          style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.7), transparent 70%)", animationDelay: "-12s" }}
+        />
+        {/* Grain */}
+        <div
+          className="absolute inset-0 opacity-[0.07] mix-blend-multiply"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
+          }}
+        />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 sm:py-32">
         <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary ring-1 ring-secondary/20 mb-6">
-            <Star className="h-3 w-3" /> Open Source · Web4 Native
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/15 px-4 py-1.5 text-xs font-semibold text-secondary ring-1 ring-secondary/30 mb-6">
+            <Sparkles className="h-3 w-3" /> Open Source · Web4 Native
           </span>
         </motion.div>
         <motion.h1
-          className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+          className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
           initial="hidden" animate="visible" variants={fadeUp} custom={1}
         >
-          The Open Infrastructure for{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Web4 Developers
+          Find your{" "}
+          <span className="relative inline-block">
+            <span className="bg-gradient-to-r from-secondary via-purple-500 to-primary bg-clip-text text-transparent">
+              aura
+            </span>
+            <svg className="absolute -bottom-2 left-0 w-full" height="12" viewBox="0 0 200 12" fill="none">
+              <path d="M2 8 Q 50 2, 100 6 T 198 5" stroke="hsl(var(--secondary))" strokeWidth="3" strokeLinecap="round" fill="none" />
+            </svg>
           </span>
+          ,<br/>build with your{" "}
+          <span className="italic font-serif">collective</span>.
         </motion.h1>
         <motion.p
-          className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg"
+          className="mx-auto mt-6 max-w-xl text-base text-muted-foreground sm:text-lg"
           initial="hidden" animate="visible" variants={fadeUp} custom={2}
         >
-          Ship models, share code, and collaborate on the decentralized web — no gatekeepers.
+          Ship models, share code, and collaborate on the decentralized web — peer to peer, no gatekeepers, your data stays yours.
         </motion.p>
         <motion.div
-          className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+          className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
           initial="hidden" animate="visible" variants={fadeUp} custom={3}
         >
           <Link to="/sign-up">
-            <Button size="lg" className="bg-primary text-primary-foreground font-semibold hover:bg-primary/90 gap-2 w-full sm:w-auto">
-              Get Started <ArrowRight className="h-4 w-4" />
+            <Button size="lg" className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 w-full sm:w-auto rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all">
+              Join the Collective <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
           <Link to="/explore">
-            <Button size="lg" variant="outline" className="gap-2 w-full sm:w-auto">
-              Explore Projects <GitFork className="h-4 w-4" />
+            <Button size="lg" variant="outline" className="gap-2 w-full sm:w-auto rounded-full px-8 border-2">
+              Wander projects <GitFork className="h-4 w-4" />
             </Button>
           </Link>
         </motion.div>
@@ -110,7 +129,7 @@ const Index = () => (
 
     {/* Stats */}
     <section className="border-y bg-muted/30">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4 sm:px-6">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-10 sm:grid-cols-4 sm:px-6">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
             <p className="text-2xl font-bold text-foreground sm:text-3xl">{s.value}</p>
@@ -121,20 +140,22 @@ const Index = () => (
     </section>
 
     {/* Pillars */}
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
-      <div className="text-center mb-12">
-        <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Everything you need, open by default</h2>
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <div className="text-center mb-14">
+        <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+          Everything you need, <span className="italic font-serif text-secondary">open by default</span>
+        </h2>
         <p className="mt-3 text-muted-foreground">One platform for models, code, and datasets — built for the decentralized era.</p>
       </div>
       <div className="grid gap-6 sm:grid-cols-3">
         {pillars.map((p, i) => (
           <motion.div key={p.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-            <Card className="h-full border-border/60 hover:border-secondary/40 transition-colors">
+            <Card className="h-full border-2 border-border hover:border-secondary/60 transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0_hsl(var(--secondary)/0.3)]">
               <CardHeader>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary mb-2">
-                  <p.icon className="h-6 w-6" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary/40 text-foreground mb-2">
+                  <p.icon className="h-7 w-7" />
                 </div>
-                <CardTitle className="text-lg">{p.title}</CardTitle>
+                <CardTitle className="text-xl">{p.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-sm leading-relaxed">{p.desc}</CardDescription>
@@ -145,44 +166,66 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Pricing */}
-    <section id="pricing" className="bg-muted/30 py-16 sm:py-24">
+    {/* Pricing — sticker cards */}
+    <section id="pricing" className="relative overflow-hidden bg-muted/30 py-20 sm:py-28">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-20 right-1/4 h-72 w-72 rounded-full opacity-30 blur-3xl"
+        style={{ background: "radial-gradient(circle, hsl(var(--secondary)), transparent 70%)" }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Simple, transparent pricing</h2>
-          <p className="mt-3 text-muted-foreground">Start free. Scale when you're ready.</p>
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            Pick your <span className="italic font-serif text-secondary">orbit</span>
+          </h2>
+          <p className="mt-3 text-muted-foreground">Start free. Grow when the cosmos calls.</p>
         </div>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-3 sm:gap-6">
           {tiers.map((t, i) => (
-            <motion.div key={t.name} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-              <Card className={`h-full flex flex-col ${t.highlight ? "border-secondary ring-2 ring-secondary/20 shadow-lg" : "border-border/60"}`}>
+            <motion.div
+              key={t.name}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={i}
+              className={`${t.rotate} hover:rotate-0 transition-transform duration-300`}
+            >
+              <Card
+                className={`h-full flex flex-col border-2 border-foreground rounded-2xl shadow-[6px_6px_0_hsl(var(--foreground))] ${
+                  t.highlight ? "bg-gradient-to-br from-primary/30 to-secondary/10" : "bg-card"
+                }`}
+              >
                 <CardHeader>
-                  {t.highlight && (
-                    <span className="mb-2 inline-block w-fit rounded-full bg-secondary px-3 py-0.5 text-xs font-semibold text-secondary-foreground">
-                      Most Popular
-                    </span>
-                  )}
-                  <CardTitle className="text-xl">{t.name}</CardTitle>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`inline-block h-3 w-3 rounded-full ${t.accent}`} />
+                    {t.highlight && (
+                      <span className="rounded-full bg-foreground px-3 py-0.5 text-xs font-semibold text-background">
+                        ✦ most loved
+                      </span>
+                    )}
+                  </div>
+                  <CardTitle className="text-2xl font-serif italic">{t.name}</CardTitle>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-extrabold text-foreground">{t.price}</span>
+                    <span className="text-4xl font-extrabold text-foreground">{t.price}</span>
                     <span className="text-sm text-muted-foreground">/mo</span>
                   </div>
-                  <CardDescription>{t.desc}</CardDescription>
+                  <CardDescription className="italic">{t.desc}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col">
                   <ul className="flex-1 space-y-2.5 mb-6">
                     {t.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Check className="h-4 w-4 text-secondary shrink-0" />
+                      <li key={f} className="flex items-start gap-2 text-sm text-foreground/80">
+                        <Check className="h-4 w-4 text-secondary shrink-0 mt-0.5" strokeWidth={3} />
                         {f}
                       </li>
                     ))}
                   </ul>
                   <Button
-                    className={`w-full font-semibold ${
+                    className={`w-full font-semibold rounded-full border-2 border-foreground ${
                       t.highlight
                         ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                        : "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "bg-background text-foreground hover:bg-foreground hover:text-background"
                     }`}
                   >
                     {t.cta}
@@ -196,14 +239,16 @@ const Index = () => (
     </section>
 
     {/* CTA */}
-    <section className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-24">
-      <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Ready to build the future?</h2>
+    <section className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 sm:py-28">
+      <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+        Ready to <span className="italic font-serif text-secondary">resonate</span>?
+      </h2>
       <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-        Join thousands of developers shipping on the open, decentralized web.
+        Join thousands of builders shipping on the open, decentralized web.
       </p>
       <div className="mt-8 flex justify-center gap-3">
         <Link to="/sign-up">
-          <Button size="lg" className="bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/90 gap-2">
+          <Button size="lg" className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all">
             Join AuraCollective <Users className="h-4 w-4" />
           </Button>
         </Link>

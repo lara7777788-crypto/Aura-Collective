@@ -1,4 +1,3 @@
-import { Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -8,7 +7,6 @@ interface LogoProps {
 
 const Logo = ({ size = "md", className }: LogoProps) => {
   const dims = size === "sm" ? "h-8 w-8" : "h-9 w-9";
-  const icon = size === "sm" ? "h-4 w-4" : "h-5 w-5";
 
   return (
     <div
@@ -18,17 +16,32 @@ const Logo = ({ size = "md", className }: LogoProps) => {
         className,
       )}
     >
-      {/* Pulsing glow */}
-      <span className="absolute inset-0 rounded-lg bg-primary animate-ping opacity-40" />
-      {/* Sweep highlight */}
-      <span className="pointer-events-none absolute -inset-y-1 -left-full w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-logo-sweep" />
-      <Zap
-        className={cn(
-          icon,
-          "relative z-10 text-primary-foreground transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 animate-logo-flicker",
-        )}
-        strokeWidth={2.5}
-        fill="currentColor"
+      {/* Outer slow rotating halo */}
+      <span
+        className="absolute inset-0 rounded-lg opacity-70"
+        style={{
+          background:
+            "conic-gradient(from 0deg, hsl(var(--secondary)), transparent 40%, hsl(var(--secondary)) 80%, transparent)",
+          animation: "logo-spin 6s linear infinite",
+        }}
+      />
+      {/* Pulsing aura ring */}
+      <span
+        className="absolute h-6 w-6 rounded-full opacity-80"
+        style={{
+          background:
+            "radial-gradient(circle, hsl(280 85% 60%) 0%, hsl(var(--secondary)) 45%, transparent 75%)",
+          animation: "logo-pulse 2.2s ease-in-out infinite",
+        }}
+      />
+      {/* Inner core */}
+      <span
+        className="relative z-10 h-2.5 w-2.5 rounded-full bg-white"
+        style={{
+          boxShadow:
+            "0 0 6px hsl(280 90% 70%), 0 0 12px hsl(var(--secondary)), 0 0 18px hsl(var(--secondary))",
+          animation: "logo-core 1.6s ease-in-out infinite",
+        }}
       />
     </div>
   );

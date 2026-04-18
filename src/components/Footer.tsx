@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap } from "lucide-react";
+import Logo from "./Logo";
 
 const Footer = () => (
   <footer className="border-t bg-muted/30">
@@ -7,9 +7,7 @@ const Footer = () => (
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <Logo size="sm" />
             <span className="font-bold text-foreground">
               Aura<span className="text-secondary">Collective</span>
             </span>
@@ -27,7 +25,7 @@ const Footer = () => (
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/explore" className="hover:text-secondary transition-colors">Explore</Link></li>
             <li><Link to="/community" className="hover:text-secondary transition-colors">Community</Link></li>
-            <li><Link to="/docs" className="hover:text-secondary transition-colors">Documentation</Link></li>
+            <li><Link to="/about" className="hover:text-secondary transition-colors">About</Link></li>
           </ul>
         </div>
         <div>

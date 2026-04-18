@@ -80,10 +80,21 @@ export default {
             height: "0",
           },
         },
+        "logo-sweep": {
+          "0%": { transform: "translateX(0) rotate(12deg)" },
+          "100%": { transform: "translateX(400%) rotate(12deg)" },
+        },
+        "logo-flicker": {
+          "0%, 100%": { opacity: "1", filter: "drop-shadow(0 0 0px hsl(var(--primary-foreground)))" },
+          "45%": { opacity: "0.85", filter: "drop-shadow(0 0 4px hsl(var(--primary-foreground)))" },
+          "55%": { opacity: "1", filter: "drop-shadow(0 0 6px hsl(var(--primary-foreground)))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "logo-sweep": "logo-sweep 3s ease-in-out infinite",
+        "logo-flicker": "logo-flicker 2.5s ease-in-out infinite",
       },
     },
   },

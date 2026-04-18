@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { MessageSquare, ThumbsUp, Clock, Plus } from "lucide-react";
+import { MessageSquare, ThumbsUp, Clock, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import CosmicBackdrop from "@/components/CosmicBackdrop";
 
 const topics = ["All", "General", "Models", "Web4", "Help", "Showcase"];
 
@@ -21,57 +22,76 @@ const Community = () => {
   const filtered = threads.filter((t) => activeTopic === "All" || t.topic === activeTopic);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Community</h1>
-          <p className="mt-1 text-muted-foreground">Discuss, share, and learn with fellow builders.</p>
-        </div>
-        <Button className="bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/90 gap-2 hidden sm:inline-flex">
-          <Plus className="h-4 w-4" /> New Thread
-        </Button>
-      </div>
-
-      <div className="mb-6 flex gap-2 overflow-x-auto">
-        {topics.map((t) => (
-          <Button
-            key={t}
-            size="sm"
-            variant={activeTopic === t ? "default" : "outline"}
-            className={activeTopic === t ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""}
-            onClick={() => setActiveTopic(t)}
-          >
-            {t}
+    <div className="relative">
+      <CosmicBackdrop variant="soft" />
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mb-10 flex flex-col gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+          <div>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/15 px-4 py-1.5 text-xs font-semibold text-secondary ring-1 ring-secondary/30 mb-3">
+              <Sparkles className="h-3 w-3" /> Voices of the collective
+            </span>
+            <h1 className="text-3xl font-extrabold text-foreground sm:text-5xl">
+              The <span className="italic font-serif text-secondary">commons</span>
+            </h1>
+            <p className="mt-2 text-muted-foreground">Discuss, share, and learn with fellow builders.</p>
+          </div>
+          <Button className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 hidden sm:inline-flex rounded-full px-6 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all">
+            <Plus className="h-4 w-4" /> Start a thread
           </Button>
-        ))}
-      </div>
+        </div>
 
-      <div className="space-y-3">
-        {filtered.map((t) => (
-          <Card key={t.id} className="group cursor-pointer border-border/60 hover:border-secondary/40 transition-all hover:shadow-md">
-            <CardContent className="flex items-center gap-4 p-4">
-              <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary" />
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground text-sm group-hover:text-secondary transition-colors truncate">{t.title}</h3>
-                <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">
-                  <span>{t.author}</span>
-                  <Badge className="bg-secondary/10 text-secondary border-0 text-[10px]">{t.topic}</Badge>
-                  <span className="flex items-center gap-0.5"><Clock className="h-3 w-3" /> {t.time}</span>
+        <div className="mb-6 flex gap-2 overflow-x-auto">
+          {topics.map((t) => (
+            <Button
+              key={t}
+              size="sm"
+              variant="outline"
+              className={`rounded-full border-2 ${
+                activeTopic === t ? "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90" : ""
+              }`}
+              onClick={() => setActiveTopic(t)}
+            >
+              {t}
+            </Button>
+          ))}
+        </div>
+
+        <div className="space-y-3">
+          {filtered.map((t) => (
+            <Card
+              key={t.id}
+              className="group cursor-pointer rounded-2xl border-2 border-border bg-card/80 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-secondary/60 hover:shadow-[4px_4px_0_hsl(var(--secondary)/0.3)]"
+            >
+              <CardContent className="flex items-center gap-4 p-4">
+                <div
+                  className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-2 ring-white/40"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(320 90% 75%), hsl(280 80% 60%), hsl(48 95% 60%))",
+                  }}
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground text-sm group-hover:text-secondary transition-colors truncate">{t.title}</h3>
+                  <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">
+                    <span>{t.author}</span>
+                    <Badge className="bg-secondary/10 text-secondary border-0 text-[10px] rounded-full">{t.topic}</Badge>
+                    <span className="flex items-center gap-0.5"><Clock className="h-3 w-3" /> {t.time}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-4 text-xs text-muted-foreground shrink-0">
-                <span className="flex items-center gap-1"><ThumbsUp className="h-3.5 w-3.5" /> {t.likes}</span>
-                <span className="flex items-center gap-1"><MessageSquare className="h-3.5 w-3.5" /> {t.replies}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                <div className="flex items-center gap-4 text-xs text-muted-foreground shrink-0">
+                  <span className="flex items-center gap-1"><ThumbsUp className="h-3.5 w-3.5" /> {t.likes}</span>
+                  <span className="flex items-center gap-1"><MessageSquare className="h-3.5 w-3.5" /> {t.replies}</span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-      <div className="mt-6 sm:hidden">
-        <Button className="w-full bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/90 gap-2">
-          <Plus className="h-4 w-4" /> New Thread
-        </Button>
+        <div className="mt-6 sm:hidden">
+          <Button className="w-full bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 rounded-full shadow-[4px_4px_0_hsl(var(--secondary))]">
+            <Plus className="h-4 w-4" /> Start a thread
+          </Button>
+        </div>
       </div>
     </div>
   );

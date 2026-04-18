@@ -80,21 +80,31 @@ export default {
             height: "0",
           },
         },
-        "logo-sweep": {
-          "0%": { transform: "translateX(0) rotate(12deg)" },
-          "100%": { transform: "translateX(400%) rotate(12deg)" },
+        "logo-spin": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
-        "logo-flicker": {
-          "0%, 100%": { opacity: "1", filter: "drop-shadow(0 0 0px hsl(var(--primary-foreground)))" },
-          "45%": { opacity: "0.85", filter: "drop-shadow(0 0 4px hsl(var(--primary-foreground)))" },
-          "55%": { opacity: "1", filter: "drop-shadow(0 0 6px hsl(var(--primary-foreground)))" },
+        "logo-pulse": {
+          "0%, 100%": { transform: "scale(0.85)", opacity: "0.7" },
+          "50%": { transform: "scale(1.15)", opacity: "1" },
+        },
+        "logo-core": {
+          "0%, 100%": { transform: "scale(1)", opacity: "1" },
+          "50%": { transform: "scale(0.7)", opacity: "0.85" },
+        },
+        "blob-drift": {
+          "0%, 100%": { transform: "translate(0,0) scale(1)" },
+          "33%": { transform: "translate(30px,-20px) scale(1.1)" },
+          "66%": { transform: "translate(-20px,25px) scale(0.95)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "logo-sweep": "logo-sweep 3s ease-in-out infinite",
-        "logo-flicker": "logo-flicker 2.5s ease-in-out infinite",
+        "logo-spin": "logo-spin 6s linear infinite",
+        "logo-pulse": "logo-pulse 2.2s ease-in-out infinite",
+        "logo-core": "logo-core 1.6s ease-in-out infinite",
+        "blob-drift": "blob-drift 18s ease-in-out infinite",
       },
     },
   },

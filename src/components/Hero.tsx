@@ -4,6 +4,7 @@ import { ArrowRight, GitFork, Sparkles, Heart, Lock, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import Starfield from "./Starfield";
 import ShootingStar from "./ShootingStar";
+import AnimatedUnicorn from "./AnimatedUnicorn";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -36,10 +37,12 @@ const Hero = () => (
       {/* Starfield (parallax) */}
       <Starfield density={70} />
       {/* Shooting stars — multiple staggered streaks */}
-      <ShootingStar initialDelay={400} minDelay={900} maxDelay={2600} />
-      <ShootingStar initialDelay={1600} minDelay={1400} maxDelay={3200} />
-      <ShootingStar initialDelay={2800} minDelay={1100} maxDelay={2800} />
-      <ShootingStar initialDelay={4200} minDelay={1800} maxDelay={4000} />
+      <ShootingStar initialDelay={300} minDelay={700} maxDelay={1800} />
+      <ShootingStar initialDelay={900} minDelay={900} maxDelay={2200} />
+      <ShootingStar initialDelay={1700} minDelay={1100} maxDelay={2600} />
+      <ShootingStar initialDelay={2500} minDelay={1300} maxDelay={2800} />
+      <ShootingStar initialDelay={3400} minDelay={1500} maxDelay={3000} />
+      <ShootingStar initialDelay={4500} minDelay={1700} maxDelay={3400} />
       {/* Grain */}
       <div
         className="absolute inset-0 opacity-[0.06] mix-blend-multiply"
@@ -49,6 +52,12 @@ const Hero = () => (
         }}
       />
     </div>
+
+    {/* Floating unicorns */}
+    <AnimatedUnicorn size={64} delay={0} className="absolute left-[6%] top-[18%] hidden md:block opacity-90" />
+    <AnimatedUnicorn size={56} delay={1.5} flip className="absolute right-[8%] top-[28%] hidden md:block opacity-90" />
+    <AnimatedUnicorn size={44} delay={0.8} className="absolute right-[10%] bottom-[10%] block md:hidden opacity-80" />
+    <AnimatedUnicorn size={40} delay={1.2} flip className="absolute left-[8%] bottom-[14%] block md:hidden opacity-80" />
 
     <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 sm:py-32">
       <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
@@ -101,7 +110,7 @@ const Hero = () => (
             size="lg"
             className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 w-full sm:w-auto rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all"
           >
-            Let's ship something <ArrowRight className="h-4 w-4" />
+            Begin your aura <ArrowRight className="h-4 w-4" />
           </Button>
         </Link>
         <Link to="/explore">

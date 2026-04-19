@@ -152,15 +152,17 @@ const Index = () => (
                       </li>
                     ))}
                   </ul>
-                  <Button
-                    className={`w-full font-semibold rounded-full border-2 border-foreground ${
-                      t.highlight
-                        ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                        : "bg-background text-foreground hover:bg-foreground hover:text-background"
-                    }`}
-                  >
-                    {t.cta}
-                  </Button>
+                  <Link to="/sign-up" className="block">
+                    <Button
+                      className={`w-full font-semibold rounded-full border-2 border-foreground ${
+                        t.highlight
+                          ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                          : "bg-background text-foreground hover:bg-foreground hover:text-background"
+                      }`}
+                    >
+                      {t.cta}
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </motion.div>

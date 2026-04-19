@@ -1,13 +1,28 @@
 import { ReactNode } from "react";
+import Starfield from "./Starfield";
+import ShootingStar from "./ShootingStar";
 
 /**
- * Cosmic dreamy backdrop: drifting gradient blobs + grain.
+ * Cosmic dreamy backdrop: drifting gradient blobs + starfield + shooting stars + grain.
  * Place once near the top of a page section; absolutely-positioned, behind content.
  */
-const CosmicBackdrop = ({ variant = "default" }: { variant?: "default" | "soft" }) => {
+const CosmicBackdrop = ({
+  variant = "default",
+  withStars = true,
+}: {
+  variant?: "default" | "soft";
+  withStars?: boolean;
+}) => {
   const opacity = variant === "soft" ? 0.35 : 0.6;
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {withStars && <Starfield density={50} />}
+      {withStars && (
+        <>
+          <ShootingStar initialDelay={1200} minDelay={2200} maxDelay={4500} />
+          <ShootingStar initialDelay={3400} minDelay={2600} maxDelay={5200} />
+        </>
+      )}
       <div
         className="absolute -top-24 -left-20 h-80 w-80 rounded-full blur-3xl animate-blob-drift"
         style={{ background: "radial-gradient(circle, hsl(var(--secondary)/0.7), transparent 70%)", opacity }}

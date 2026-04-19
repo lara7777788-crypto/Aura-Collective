@@ -117,9 +117,20 @@
 
 /* ---- Shooting star ---- */
 @keyframes shoot {
-  0% { transform: translate3d(-10vw, 0, 0) rotate(20deg); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translate3d(120vw, 60vh, 0) rotate(20deg); opacity: 0; }
+  0% { transform: translate3d(-10vw, -2vh, 0) rotate(15deg); opacity: 0; }
+  8% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate3d(115vw, 18vh, 0) rotate(15deg); opacity: 0; }
+}
+
+/* ---- Unicorn float ---- */
+@keyframes unicorn-float {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+@keyframes unicorn-sparkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* ---- Subtle starfield twinkle ---- */

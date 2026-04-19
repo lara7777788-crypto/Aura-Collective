@@ -35,8 +35,11 @@ const Hero = () => (
       />
       {/* Starfield (parallax) */}
       <Starfield density={70} />
-      {/* Shooting star */}
-      <ShootingStar />
+      {/* Shooting stars — multiple staggered streaks */}
+      <ShootingStar initialDelay={400} minDelay={900} maxDelay={2600} />
+      <ShootingStar initialDelay={1600} minDelay={1400} maxDelay={3200} />
+      <ShootingStar initialDelay={2800} minDelay={1100} maxDelay={2800} />
+      <ShootingStar initialDelay={4200} minDelay={1800} maxDelay={4000} />
       {/* Grain */}
       <div
         className="absolute inset-0 opacity-[0.06] mix-blend-multiply"

@@ -180,7 +180,7 @@ const Index = () => (
       <div className="mt-8 flex justify-center gap-3">
         <Link to="/sign-up">
           <Button size="lg" className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all">
-            Join AuraCollective <Users className="h-4 w-4" />
+            Join the collective <Users className="h-4 w-4" />
           </Button>
         </Link>
       </div>

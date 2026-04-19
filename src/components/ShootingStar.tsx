@@ -4,21 +4,20 @@ import { useEffect, useState } from "react";
  * Occasionally streaks a shooting star across the parent section.
  * Parent must be `position: relative; overflow: hidden`.
  */
-const ShootingStar = () => {
+const ShootingStar = ({ minDelay = 1200, maxDelay = 3500, initialDelay = 600 }: { minDelay?: number; maxDelay?: number; initialDelay?: number }) => {
   const [keyId, setKeyId] = useState(0);
   const [top, setTop] = useState(15);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     const trigger = () => {
-      setTop(Math.random() * 35 + 5); // 5%–40% from top
+      setTop(Math.random() * 60 + 5); // 5%–65% from top
       setKeyId((k) => k + 1);
-      // Re-fire every 5–11s
-      timeout = setTimeout(trigger, 5000 + Math.random() * 6000);
+      timeout = setTimeout(trigger, minDelay + Math.random() * (maxDelay - minDelay));
     };
-    timeout = setTimeout(trigger, 1500);
+    timeout = setTimeout(trigger, initialDelay);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [minDelay, maxDelay, initialDelay]);
 
   return (
     <span

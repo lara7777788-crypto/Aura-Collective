@@ -4,6 +4,7 @@ import { Box, Code2, Database, Users, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Hero from "@/components/Hero";
+import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
 
 const stats = [
   { label: "Developers", value: "12,400+" },
@@ -27,6 +28,7 @@ const tiers = [
     cta: "Start Sparking",
     rotate: "-rotate-2",
     accent: "bg-primary",
+    priceId: null,
   },
   {
     name: "Glow",
@@ -37,6 +39,7 @@ const tiers = [
     rotate: "rotate-1",
     accent: "bg-secondary",
     highlight: true,
+    priceId: "glow_monthly",
   },
   {
     name: "Constellation",
@@ -46,6 +49,7 @@ const tiers = [
     cta: "Form your galaxy",
     rotate: "-rotate-1",
     accent: "bg-foreground",
+    priceId: "constellation_monthly",
   },
 ];
 

@@ -110,7 +110,7 @@ const Hero = () => (
             size="lg"
             className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 w-full sm:w-auto rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all"
           >
-            Begin your aura <ArrowRight className="h-4 w-4" />
+            Let's ship some auras <ArrowRight className="h-4 w-4" />
           </Button>
         </Link>
         <Link to="/explore">

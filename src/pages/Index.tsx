@@ -58,7 +58,9 @@ const fadeUp = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
 };
 
-const Index = () => (
+const Index = () => {
+  const { openCheckout, loading } = usePaddleCheckout();
+  return (
   <>
     <Hero />
 
@@ -156,8 +158,10 @@ const Index = () => (
                       </li>
                     ))}
                   </ul>
-                  <Link to="/sign-up" className="block">
+                  {t.priceId ? (
                     <Button
+                      onClick={() => openCheckout(t.priceId!)}
+                      disabled={loading}
                       className={`w-full font-semibold rounded-full border-2 border-foreground ${
                         t.highlight
                           ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
@@ -166,7 +170,19 @@ const Index = () => (
                     >
                       {t.cta}
                     </Button>
-                  </Link>
+                  ) : (
+                    <Link to="/sign-up" className="block">
+                      <Button
+                        className={`w-full font-semibold rounded-full border-2 border-foreground ${
+                          t.highlight
+                            ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                            : "bg-background text-foreground hover:bg-foreground hover:text-background"
+                        }`}
+                      >
+                        {t.cta}
+                      </Button>
+                    </Link>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
@@ -192,6 +208,7 @@ const Index = () => (
       </div>
     </section>
   </>
-);
+  );
+};
 
 export default Index;

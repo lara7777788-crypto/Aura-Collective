@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, Star, Eye, Trash2, ExternalLink, Sparkles } from "lucide-react";
+import { Plus, Star, Eye, Trash2, ExternalLink, Sparkles, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -37,6 +37,43 @@ const MembersArea = ({ tier }: { tier: string | null }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<"model" | "code" | "dataset">("code");
+
+  const [editing, setEditing] = useState<Project | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editCategory, setEditCategory] = useState<"model" | "code" | "dataset">("code");
+  const [savingEdit, setSavingEdit] = useState(false);
+
+  const startEdit = (p: Project) => {
+    setEditing(p);
+    setEditTitle(p.title);
+    setEditDescription(p.description ?? "");
+    setEditCategory(p.category);
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editing || !editTitle.trim()) return;
+    setSavingEdit(true);
+    const { data, error } = await supabase
+      .from("projects")
+      .update({
+        title: editTitle.trim().slice(0, 120),
+        description: editDescription.trim() ? editDescription.trim().slice(0, 500) : null,
+        category: editCategory,
+      })
+      .eq("id", editing.id)
+      .select("id, title, slug, description, category, stars_count, views_count, created_at")
+      .single();
+    setSavingEdit(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setProjects((p) => p.map((x) => (x.id === editing.id ? (data as Project) : x)));
+    setEditing(null);
+    toast.success("Project updated ✨");
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -248,6 +285,14 @@ const MembersArea = ({ tier }: { tier: string | null }) => {
                     <Button
                       variant="ghost"
                       size="icon"
+                      onClick={() => startEdit(p)}
+                      aria-label="Edit"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       onClick={() => handleDelete(p.id)}
                       aria-label="Delete"
                       className="text-destructive hover:text-destructive hover:bg-destructive/10"
@@ -277,6 +322,59 @@ const MembersArea = ({ tier }: { tier: string | null }) => {
           </CardContent>
         </Card>
       )}
+
+      <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit project</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleUpdate} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-title">Title</Label>
+              <Input
+                id="edit-title"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                placeholder="aura-llm-7b"
+                required
+                maxLength={120}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-desc">Description</Label>
+              <Textarea
+                id="edit-desc"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                placeholder="What does it do? Who is it for?"
+                rows={3}
+                maxLength={500}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-cat">Category</Label>
+              <Select value={editCategory} onValueChange={(v) => setEditCategory(v as typeof editCategory)}>
+                <SelectTrigger id="edit-cat">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="model">Model</SelectItem>
+                  <SelectItem value="code">Code</SelectItem>
+                  <SelectItem value="dataset">Dataset</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setEditing(null)}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={savingEdit}>
+                {savingEdit ? "Saving…" : "Save changes"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

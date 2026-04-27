@@ -2,6 +2,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 const clientToken = import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN;
 
+export function getPaddleEnvironment(): "sandbox" | "live" {
+  return clientToken?.startsWith("test_") ? "sandbox" : "live";
+}
+
 declare global {
   interface Window {
     Paddle: any;

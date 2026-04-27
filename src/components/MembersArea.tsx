@@ -119,6 +119,12 @@ const MembersArea = ({ tier }: { tier: string | null }) => {
               Ship private projects, track your aura, and move with the collective.
             </p>
           </div>
+          <div className="flex items-center gap-2">
+            <Link to="/billing">
+              <Button variant="outline" className="rounded-full font-semibold">
+                Manage billing
+              </Button>
+            </Link>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button className="bg-foreground text-background hover:bg-foreground/90 font-semibold rounded-full gap-2 shadow-[4px_4px_0_hsl(var(--secondary))]">
@@ -173,6 +179,7 @@ const MembersArea = ({ tier }: { tier: string | null }) => {
               </form>
             </DialogContent>
           </Dialog>
+          </div>
         </div>
       </div>
 

@@ -1,54 +1,80 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Box, Code2, Database, Users, Check } from "lucide-react";
+import { Box, Code2, Database, ArrowRight, Check, Terminal, GitBranch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Hero from "@/components/Hero";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
 
 const stats = [
-  { label: "Developers", value: "12,400+" },
-  { label: "Open Projects", value: "3,200+" },
-  { label: "Models Hosted", value: "860+" },
-  { label: "Contributions", value: "48,000+" },
+  { value: "12,400+", label: "developers" },
+  { value: "3,200+", label: "open repos" },
+  { value: "860+", label: "models" },
+  { value: "48k+", label: "commits" },
 ];
 
 const pillars = [
-  { icon: Box, title: "Models", desc: "Host, version, and share AI models with built-in inference endpoints." },
-  { icon: Code2, title: "Code", desc: "Publish projects, collaborate with pull requests, and ship faster." },
-  { icon: Database, title: "Datasets", desc: "Store, discover, and share datasets for training and evaluation." },
+  {
+    icon: Box,
+    title: "Models",
+    cmd: "aura model push aura-llm-7b",
+    desc: "Host, version, and serve AI models with built-in inference endpoints.",
+    accent: "text-yellow-500",
+  },
+  {
+    icon: Code2,
+    title: "Code",
+    cmd: "git remote add aura …",
+    desc: "Publish projects, open PRs, ship faster. Git-compatible from day one.",
+    accent: "text-pink-500",
+  },
+  {
+    icon: Database,
+    title: "Datasets",
+    cmd: "aura dataset pull --tag nlp",
+    desc: "Discover, fork, and version datasets for training and evaluation.",
+    accent: "text-purple-500",
+  },
 ];
 
 const tiers = [
   {
-    name: "Spark",
+    name: "spark",
     price: "$0",
-    desc: "Begin your aura",
-    features: ["3 public projects", "Community access", "Basic model hosting", "1 GB storage"],
-    cta: "Start Sparking",
-    rotate: "-rotate-2",
-    accent: "bg-primary",
+    desc: "// for solo hackers",
+    features: ["3 public repos", "Community access", "Basic model hosting", "1 GB storage"],
+    cta: "init free",
     priceId: null,
   },
   {
-    name: "Glow",
+    name: "glow",
     price: "$9",
-    desc: "For radiant builders",
-    features: ["Unlimited projects", "Private repos", "Advanced analytics", "10 GB storage", "Priority support", "Glow badge"],
-    cta: "Light it up",
-    rotate: "rotate-1",
-    accent: "bg-secondary",
-    highlight: true,
+    desc: "// for radiant builders",
+    features: [
+      "Unlimited repos",
+      "Private projects",
+      "Advanced analytics",
+      "10 GB storage",
+      "Priority support",
+      "Glow badge",
+    ],
+    cta: "git push --tier glow",
     priceId: "glow_monthly",
+    highlight: true,
   },
   {
-    name: "Constellation",
+    name: "constellation",
     price: "$29",
-    desc: "Move as a galaxy",
-    features: ["Everything in Glow", "Org profiles", "Team collaboration", "50 GB storage", "Admin controls", "SSO support"],
-    cta: "Form your galaxy",
-    rotate: "-rotate-1",
-    accent: "bg-foreground",
+    desc: "// for whole galaxies",
+    features: [
+      "Everything in glow",
+      "Org profiles",
+      "Team collaboration",
+      "50 GB storage",
+      "Admin controls",
+      "SSO support",
+    ],
+    cta: "deploy team",
     priceId: "constellation_monthly",
   },
 ];
@@ -61,153 +87,226 @@ const fadeUp = {
 const Index = () => {
   const { openCheckout, loading } = usePaddleCheckout();
   return (
-  <>
-    <Hero />
+    <>
+      <Hero />
 
-    {/* Stats */}
-    <section className="border-y bg-muted/30">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-10 sm:grid-cols-4 sm:px-6">
-        {stats.map((s) => (
-          <div key={s.label} className="text-center">
-            <p className="text-2xl font-bold text-foreground sm:text-3xl">{s.value}</p>
-            <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</p>
+      {/* Stats — terminal strip */}
+      <section className="border-b bg-background">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label} className="font-mono">
+                <p className="text-2xl font-bold text-foreground sm:text-3xl">
+                  <span className="text-secondary">$</span> {s.value}
+                </p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </section>
-
-    {/* Pillars */}
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-      <div className="text-center mb-14">
-        <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-          Everything you need, <span className="italic font-serif text-secondary">open by default</span>
-        </h2>
-        <p className="mt-3 text-muted-foreground">One platform for models, code, and datasets — built for the decentralized era.</p>
-      </div>
-      <div className="grid gap-6 sm:grid-cols-3">
-        {pillars.map((p, i) => (
-          <motion.div key={p.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-            <Card className="h-full border-2 border-border hover:border-secondary/60 transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0_hsl(var(--secondary)/0.3)]">
-              <CardHeader>
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary/40 text-foreground mb-2">
-                  <p.icon className="h-7 w-7" />
-                </div>
-                <CardTitle className="text-xl">{p.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-sm leading-relaxed">{p.desc}</CardDescription>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-
-    {/* Pricing — sticker cards */}
-    <section id="pricing" className="relative overflow-hidden bg-muted/30 py-20 sm:py-28">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-20 right-1/4 h-72 w-72 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(circle, hsl(var(--secondary)), transparent 70%)" }}
-      />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            Pick your <span className="italic font-serif text-secondary">orbit</span>
-          </h2>
-          <p className="mt-3 text-muted-foreground">Start free. Grow when the cosmos calls.</p>
         </div>
-        <div className="grid gap-8 sm:grid-cols-3 sm:gap-6">
-          {tiers.map((t, i) => (
+      </section>
+
+      {/* Pillars */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mb-14 max-w-2xl">
+          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-secondary">
+            // the stack
+          </p>
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            One platform for{" "}
+            <span className="font-mono text-secondary">{"<models />"}</span>,{" "}
+            <span className="font-mono text-secondary">{"<code />"}</span>, and{" "}
+            <span className="font-mono text-secondary">{"<datasets />"}</span>.
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            Built for the decentralized era. CLI-first, browser-friendly, and made to play nice
+            with the tools you already love.
+          </p>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {pillars.map((p, i) => (
             <motion.div
-              key={t.name}
+              key={p.title}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               custom={i}
-              className={`${t.rotate} hover:rotate-0 transition-transform duration-300`}
             >
-              <Card
-                className={`h-full flex flex-col border-2 border-foreground rounded-2xl shadow-[6px_6px_0_hsl(var(--foreground))] ${
-                  t.highlight ? "bg-gradient-to-br from-primary/30 to-secondary/10" : "bg-card"
-                }`}
-              >
+              <Card className="group h-full border border-border transition-all hover:-translate-y-1 hover:border-foreground hover:shadow-[6px_6px_0_hsl(var(--foreground))]">
                 <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`inline-block h-3 w-3 rounded-full ${t.accent}`} />
-                    {t.highlight && (
-                      <span className="rounded-full bg-foreground px-3 py-0.5 text-xs font-semibold text-background">
-                        ✦ most loved
-                      </span>
-                    )}
+                  <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-foreground ${p.accent}`}>
+                    <p.icon className="h-5 w-5" strokeWidth={2.2} />
                   </div>
-                  <CardTitle className="text-2xl font-serif italic">{t.name}</CardTitle>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-extrabold text-foreground">{t.price}</span>
-                    <span className="text-sm text-muted-foreground">/mo</span>
-                  </div>
-                  <CardDescription className="italic">{t.desc}</CardDescription>
+                  <CardTitle className="font-mono text-lg lowercase">{p.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-1 flex-col">
-                  <ul className="flex-1 space-y-2.5 mb-6">
-                    {t.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <Check className="h-4 w-4 text-secondary shrink-0 mt-0.5" strokeWidth={3} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  {t.priceId ? (
-                    <Button
-                      onClick={() => openCheckout(t.priceId!)}
-                      disabled={loading}
-                      className={`w-full font-semibold rounded-full border-2 border-foreground ${
-                        t.highlight
-                          ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                          : "bg-background text-foreground hover:bg-foreground hover:text-background"
-                      }`}
-                    >
-                      {t.cta}
-                    </Button>
-                  ) : (
-                    <Link to="/sign-up" className="block">
-                      <Button
-                        className={`w-full font-semibold rounded-full border-2 border-foreground ${
-                          t.highlight
-                            ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                            : "bg-background text-foreground hover:bg-foreground hover:text-background"
-                        }`}
-                      >
-                        {t.cta}
-                      </Button>
-                    </Link>
-                  )}
+                <CardContent className="space-y-4">
+                  <CardDescription className="text-sm leading-relaxed">{p.desc}</CardDescription>
+                  <div className="flex items-center gap-2 rounded-md border border-border bg-muted/60 px-3 py-2 font-mono text-[12px] text-foreground/80">
+                    <Terminal className="h-3.5 w-3.5 text-secondary shrink-0" />
+                    <code className="truncate">{p.cmd}</code>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* CTA */}
-    <section className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 sm:py-28">
-      <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-        Ready to <span className="italic font-serif text-secondary">resonate</span>?
-      </h2>
-      <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-        Join thousands of builders shipping on the open, decentralized web.
-      </p>
-      <div className="mt-8 flex justify-center gap-3">
-        <Link to="/sign-up">
-          <Button size="lg" className="bg-foreground text-background font-semibold hover:bg-foreground/90 gap-2 rounded-full px-8 shadow-[4px_4px_0_hsl(var(--secondary))] hover:shadow-[2px_2px_0_hsl(var(--secondary))] transition-all">
-            Join the collective <Users className="h-4 w-4" />
-          </Button>
-        </Link>
-      </div>
-    </section>
-  </>
+      {/* Pricing — dev cards */}
+      <section id="pricing" className="relative overflow-hidden border-y bg-muted/40 py-20 sm:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            maskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-14 text-center">
+            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-secondary">
+              // pricing.json
+            </p>
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+              Pick your <span className="font-mono">tier</span>.
+            </h2>
+            <p className="mt-3 text-muted-foreground">Start free. Upgrade when you outgrow it.</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {tiers.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+              >
+                <Card
+                  className={`relative h-full flex flex-col overflow-hidden rounded-xl border ${
+                    t.highlight
+                      ? "border-foreground bg-card shadow-[8px_8px_0_hsl(var(--foreground))]"
+                      : "border-border bg-card"
+                  }`}
+                >
+                  {t.highlight && (
+                    <div className="absolute right-3 top-3 rounded-md bg-foreground px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-background">
+                      ★ recommended
+                    </div>
+                  )}
+                  {/* Tier title bar */}
+                  <div className="border-b border-border bg-muted/40 px-5 py-2 font-mono text-[11px] text-muted-foreground">
+                    <span className="text-secondary">~/</span>tier/{t.name}.toml
+                  </div>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="font-mono text-2xl lowercase tracking-tight">
+                      {t.name}
+                    </CardTitle>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-4xl font-extrabold text-foreground">{t.price}</span>
+                      <span className="font-mono text-sm text-muted-foreground">/mo</span>
+                    </div>
+                    <CardDescription className="font-mono text-xs text-muted-foreground">
+                      {t.desc}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex flex-1 flex-col">
+                    <ul className="mb-6 flex-1 space-y-2.5">
+                      {t.features.map((f) => (
+                        <li
+                          key={f}
+                          className="flex items-start gap-2 font-mono text-[13px] text-foreground/80"
+                        >
+                          <Check
+                            className="mt-0.5 h-4 w-4 shrink-0 text-secondary"
+                            strokeWidth={3}
+                          />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    {t.priceId ? (
+                      <Button
+                        onClick={() => openCheckout(t.priceId!)}
+                        disabled={loading}
+                        className={`w-full gap-2 rounded-md font-mono text-sm ${
+                          t.highlight
+                            ? "bg-foreground text-background hover:bg-foreground/90"
+                            : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                        }`}
+                      >
+                        <Terminal className="h-3.5 w-3.5" />
+                        {t.cta}
+                      </Button>
+                    ) : (
+                      <Link to="/sign-up" className="block">
+                        <Button
+                          variant="outline"
+                          className="w-full gap-2 rounded-md border-foreground/80 font-mono text-sm hover:bg-foreground hover:text-background"
+                        >
+                          <Terminal className="h-3.5 w-3.5" />
+                          {t.cta}
+                        </Button>
+                      </Link>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA — terminal prompt */}
+      <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28">
+        <div className="overflow-hidden rounded-xl border-2 border-foreground bg-[hsl(330_20%_6%)] text-white shadow-[8px_8px_0_hsl(var(--secondary))]">
+          <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-2">
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-yellow-300/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+            </div>
+            <span className="font-mono text-[11px] text-white/50">join-the-collective.sh</span>
+            <span />
+          </div>
+          <div className="px-6 py-10 text-center sm:px-10 sm:py-14">
+            <p className="font-mono text-sm text-emerald-300">
+              $ aura init <span className="text-white/50">--vibes=unicorns</span>
+            </p>
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
+              Ready to <span className="bg-gradient-to-r from-yellow-300 to-pink-400 bg-clip-text text-transparent">resonate</span>?
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-white/70">
+              Join thousands of builders shipping on the open, decentralized web.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/sign-up">
+                <Button
+                  size="lg"
+                  className="gap-2 rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground hover:bg-primary/90"
+                >
+                  $ join --now <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/explore">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 rounded-md border-white/20 bg-transparent font-mono text-sm text-white hover:bg-white/10 hover:text-white"
+                >
+                  <GitBranch className="h-4 w-4" /> fork the org
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

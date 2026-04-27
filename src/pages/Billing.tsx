@@ -131,25 +131,43 @@ const Billing = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex items-start gap-3 rounded-lg border p-3">
                   <Calendar className="h-4 w-4 mt-0.5 text-muted-foreground" />
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Current period</p>
-                    <p className="text-sm font-medium text-foreground">
-                      {formatDate(subscription.current_period_start)} → {formatDate(subscription.current_period_end)}
-                    </p>
+                    {subscription.current_period_start && subscription.current_period_end ? (
+                      <p className="text-sm font-medium text-foreground">
+                        {formatDate(subscription.current_period_start)} → {formatDate(subscription.current_period_end)}
+                      </p>
+                    ) : (
+                      <p className="text-sm italic text-muted-foreground">
+                        Billing period not available yet
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-start gap-3 rounded-lg border p-3">
                   <CreditCard className="h-4 w-4 mt-0.5 text-muted-foreground" />
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                       {willCancel ? "Access ends" : "Renews on"}
                     </p>
-                    <p className="text-sm font-medium text-foreground">
-                      {formatDate(subscription.current_period_end)}
-                    </p>
+                    {subscription.current_period_end ? (
+                      <p className="text-sm font-medium text-foreground">
+                        {formatDate(subscription.current_period_end)}
+                      </p>
+                    ) : (
+                      <p className="text-sm italic text-muted-foreground">
+                        {willCancel ? "End date pending" : "Renewal date pending"}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
+
+              {(!subscription.current_period_start || !subscription.current_period_end) && (
+                <p className="text-xs text-muted-foreground">
+                  Billing dates usually appear within a minute of checkout. Refresh if they don't show up shortly.
+                </p>
+              )}
             </CardContent>
           </Card>
 

@@ -18,14 +18,24 @@ const ResetPassword = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Supabase puts a recovery token in the URL hash and creates a temp session.
-    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setReady(true);
+    // Supabase parses the recovery token from the URL hash and creates a temp session.
+    // Listen for that, and also fall back to checking the session directly.
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || session) {
+        setReady(true);
+      }
     });
+    // Initial check (in case the event already fired before mount)
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) setReady(true);
     });
-    return () => sub.subscription.unsubscribe();
+    // Safety fallback: enable the form after 2s regardless,
+    // so the user is never stuck. updateUser will return a clear error if no session.
+    const t = setTimeout(() => setReady(true), 2000);
+    return () => {
+      sub.subscription.unsubscribe();
+      clearTimeout(t);
+    };
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {

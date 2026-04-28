@@ -18,11 +18,13 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
+  const [testEmail, setTestEmail] = useState("");
+  const [testLoading, setTestLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -37,8 +39,40 @@ const SignUp = () => {
     }
     // Fire-and-forget: add to Mailchimp audience with 'aura' tag
     supabase.functions.invoke("mailchimp-subscribe", { body: { tags: ["aura"] } }).catch(() => {});
+    // Fire-and-forget: send branded welcome email
+    const userId = data.user?.id ?? crypto.randomUUID();
+    supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "welcome",
+        recipientEmail: email,
+        idempotencyKey: `welcome-${userId}`,
+        templateData: { name },
+      },
+    }).catch(() => {});
     toast.success("Account created! Check your email to confirm.");
     navigate("/dashboard");
+  };
+
+  const handleTestWelcome = async () => {
+    if (!testEmail) {
+      toast.error("Enter an email address first");
+      return;
+    }
+    setTestLoading(true);
+    const { error } = await supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "welcome",
+        recipientEmail: testEmail,
+        idempotencyKey: `welcome-test-${testEmail}-${Date.now()}`,
+        templateData: { name: "there" },
+      },
+    });
+    setTestLoading(false);
+    if (error) {
+      toast.error(`Failed: ${error.message}`);
+      return;
+    }
+    toast.success(`Test welcome email queued for ${testEmail}`);
   };
 
   const handleGoogle = async () => {
@@ -102,6 +136,29 @@ const SignUp = () => {
             Already have an account?{" "}
             <Link to="/sign-in" className="text-secondary font-medium hover:underline">Sign in</Link>
           </p>
+
+          <div className="border-t pt-4 space-y-2">
+            <Label htmlFor="test-email" className="text-xs text-muted-foreground">
+              Test welcome email (admin)
+            </Label>
+            <div className="flex gap-2">
+              <Input
+                id="test-email"
+                type="email"
+                placeholder="address@example.com"
+                value={testEmail}
+                onChange={(e) => setTestEmail(e.target.value)}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleTestWelcome}
+                disabled={testLoading}
+              >
+                {testLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Send"}
+              </Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

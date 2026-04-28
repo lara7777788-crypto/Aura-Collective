@@ -28,13 +28,31 @@ const ResetPassword = () => {
     };
 
     const validateRecoverySession = async () => {
-      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-      const errorDescription = params.get("error_description") || params.get("error");
-      const accessToken = params.get("access_token");
-      const refreshToken = params.get("refresh_token");
+      // Check existing session FIRST — if user already authenticated via this link,
+      // we don't want to re-process the URL (which would fail on refresh).
+      const { data: existing } = await supabase.auth.getSession();
+      if (existing.session) {
+        if (!mounted) return;
+        // Clean URL so a refresh won't re-trigger token verification
+        if (window.location.hash || window.location.search) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        markReady();
+        return;
+      }
+
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const queryParams = new URLSearchParams(window.location.search);
+      const errorDescription =
+        hashParams.get("error_description") ||
+        hashParams.get("error") ||
+        queryParams.get("error_description") ||
+        queryParams.get("error");
+      const accessToken = hashParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token");
 
       if (errorDescription) {
-        if (mounted) setLinkError(errorDescription.replace(/\+/g, " "));
+        if (mounted) setLinkError(decodeURIComponent(errorDescription.replace(/\+/g, " ")));
         return;
       }
 
@@ -53,13 +71,7 @@ const ResetPassword = () => {
         return;
       }
 
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-      if (data.session) {
-        markReady();
-      } else {
-        setLinkError("This reset link is missing or expired. Please request a fresh password reset email.");
-      }
+      setLinkError("This reset link is missing or has already been used. Please request a fresh password reset email.");
     };
 
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {

@@ -12,10 +12,14 @@ import { toast } from "sonner";
 
 interface Props {
   trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export default function StarlitStudio({ trigger }: Props) {
-  const [open, setOpen] = useState(false);
+export default function StarlitStudio({ trigger, open: openProp, onOpenChange }: Props) {
+  const [openState, setOpenState] = useState(false);
+  const open = openProp ?? openState;
+  const setOpen = onOpenChange ?? setOpenState;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 

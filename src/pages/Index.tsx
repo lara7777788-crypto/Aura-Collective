@@ -40,11 +40,11 @@ const pillars = [
 
 const tiers = [
   {
-    name: "starter",
+    name: "star",
     price: "$3 / 3€ / 3 CHF",
     desc: "// for solo hackers",
     features: ["5 public repos", "Community access", "Basic model hosting", "2 GB storage"],
-    cta: "git push --tier starter",
+    cta: "git push --tier star",
     priceId: "starter_monthly",
   },
   {
@@ -74,6 +74,7 @@ const tiers = [
       "50 GB storage",
       "Admin controls",
       "SSO support",
+      "Agentic Starlit (glow + constellation, coming soon)",
     ],
     cta: "deploy team",
     priceId: "constellation_monthly",

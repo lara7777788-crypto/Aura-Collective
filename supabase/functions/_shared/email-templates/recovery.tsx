@@ -21,53 +21,51 @@ interface RecoveryEmailProps {
 export const RecoveryEmail = ({
   siteName,
   confirmationUrl,
-}: RecoveryEmailProps) => {
-  const actionUrl = new URL(confirmationUrl)
-  const resetUrl = actionUrl.searchParams.get('redirect_to') || 'https://auracollective.io/reset-password'
-  const continueUrl = `${resetUrl}${resetUrl.includes('?') ? '&' : '?'}continue=${encodeURIComponent(confirmationUrl)}`
-
-  return (
-    <Html lang="en" dir="ltr">
-      <Head />
-      <Preview>Reset your password for {siteName}</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Reset your password</Heading>
-          <Text style={text}>
-            We received a request to reset your password for {siteName}. Click
-            the button below to continue, then confirm once more to choose a new password.
-          </Text>
-          <Button style={button} href={continueUrl}>
-            Reset Password
-          </Button>
-          <Text style={smallText}>
-            This extra step protects your reset link from automated inbox security scans.
-          </Text>
-          <Text style={footer}>
-            If you didn't request a password reset, you can safely ignore this
-            email. Your password will not be changed.
-          </Text>
-        </Container>
-      </Body>
-    </Html>
-  )
-}
+}: RecoveryEmailProps) => (
+  <Html lang="en" dir="ltr">
+    <Head />
+    <Preview>Reset your password for {siteName}</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Reset your password</Heading>
+        <Text style={text}>
+          We received a request to reset your password for {siteName}. Click
+          the button below to choose a new password.
+        </Text>
+        <Button style={button} href={confirmationUrl}>
+          Reset Password
+        </Button>
+        <Text style={footer}>
+          If you didn't request a password reset, you can safely ignore this
+          email. Your password will not be changed.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+)
 
 export default RecoveryEmail
 
-const main = { backgroundColor: '#ffffff', fontFamily: 'Inter, Arial, sans-serif' }
-const container = { padding: '32px 28px', maxWidth: '560px', margin: '0 auto' }
-const h1 = { fontSize: '26px', fontWeight: 'bold' as const, color: '#0f172a', margin: '0 0 20px' }
-const text = { fontSize: '15px', color: '#334155', lineHeight: '1.6', margin: '0 0 20px' }
-const smallText = { fontSize: '13px', color: '#64748b', lineHeight: '1.5', margin: '18px 0 0' }
-const button = {
-  backgroundColor: '#FACC15',
-  color: '#0f172a',
-  fontSize: '15px',
+const main = { backgroundColor: '#ffffff', fontFamily: 'Arial, sans-serif' }
+const container = { padding: '20px 25px' }
+const h1 = {
+  fontSize: '22px',
   fontWeight: 'bold' as const,
-  borderRadius: '8px',
-  padding: '12px 28px',
-  textDecoration: 'none',
-  display: 'inline-block',
+  color: '#000000',
+  margin: '0 0 20px',
 }
-const footer = { fontSize: '12px', color: '#94a3b8', margin: '32px 0 0' }
+const text = {
+  fontSize: '14px',
+  color: '#55575d',
+  lineHeight: '1.5',
+  margin: '0 0 25px',
+}
+const button = {
+  backgroundColor: '#000000',
+  color: '#ffffff',
+  fontSize: '14px',
+  borderRadius: '8px',
+  padding: '12px 20px',
+  textDecoration: 'none',
+}
+const footer = { fontSize: '12px', color: '#999999', margin: '30px 0 0' }

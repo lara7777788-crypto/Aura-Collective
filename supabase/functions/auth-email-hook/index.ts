@@ -36,7 +36,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "Aura Collective"
+const SITE_NAME = "sweet-project-club"
 const SENDER_DOMAIN = "notify.auracollective.io"
 const ROOT_DOMAIN = "auracollective.io"
 const FROM_DOMAIN = "notify.auracollective.io" // Domain shown in From address (may be root or sender subdomain)

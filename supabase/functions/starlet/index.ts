@@ -1,14 +1,33 @@
-// Starlet — AuraCollective's AI sidekick ✨
-// One function, four modes: summarize | search | readme | tags
+// Starlit — AuraCollective's AI sidekick ✨
+// One function, five modes: summarize | search | readme | tags | support
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM = `You are Starlet, the friendly AI sidekick of AuraCollective.io — a Web4 open developer platform.
+const SYSTEM = `You are Starlit, the friendly AI sidekick of AuraCollective.io — a Web4 open developer platform.
 Tone: warm, smart, a touch of cosmic sparkle but never cheesy. Concise. Never use emojis unless asked.`;
 
-type Mode = "summarize" | "search" | "readme" | "tags";
+const SUPPORT_SYSTEM = `You are Starlit, AuraCollective.io's customer support helper.
+Tone: warm, clear, helpful. Concise (2-4 short sentences usually). No emojis unless asked. Use markdown links sparingly.
+
+About AuraCollective:
+- An open Web4 developer platform for sharing projects (code, models, datasets, creative work).
+- Free tier + paid memberships: Starter ($3/mo), Glow ($5/mo), Constellation ($8/mo). Prices shown in USD/EUR/CHF as whole numbers.
+- Card payments are processed by Paddle (Merchant of Record). Optional crypto payments in USDC on Base, Polygon, or Ethereum via MetaMask.
+- 30-day money-back guarantee on card payments. Refunds requested via paddle.net or by emailing lara@loveconcursall.com.
+- Crypto payments are non-reversible but the team will work with users to resolve issues (extend membership, credit, or send USDC back).
+- Subscriptions can be cancelled anytime from the Billing page; access continues until end of paid period.
+- Policies: /terms, /privacy, /refunds.
+- For account/billing issues you can't resolve: tell the user to email lara@loveconcursall.com.
+
+Rules:
+- If asked about something outside Aura Collective (general coding help, world facts), gently say you focus on Aura Collective support and point them to Explore or the docs.
+- Never invent prices, features, refund windows, or policies not listed above.
+- If unsure, recommend emailing lara@loveconcursall.com.`;
+
+type Mode = "summarize" | "search" | "readme" | "tags" | "support";
+
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
@@ -133,6 +152,21 @@ function buildRequest(mode: Mode, payload: any) {
         },
       }],
       tool_choice: { type: "function", function: { name: "rank_projects" } },
+    };
+  }
+  if (mode === "support") {
+    const messages = Array.isArray(payload.messages) ? payload.messages : [];
+    const safe = messages
+      .filter((m: any) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+      .slice(-12)
+      .map((m: any) => ({ role: m.role, content: m.content.slice(0, 4000) }));
+    return {
+      model: "google/gemini-2.5-flash",
+      messages: [
+        { role: "system", content: SUPPORT_SYSTEM },
+        ...safe,
+      ],
+      max_completion_tokens: 400,
     };
   }
   return null;

@@ -35,6 +35,8 @@ const SignUp = () => {
       toast.error(error.message);
       return;
     }
+    // Fire-and-forget: add to Mailchimp audience with 'aura' tag
+    supabase.functions.invoke("mailchimp-subscribe", { body: { tags: ["aura"] } }).catch(() => {});
     toast.success("Account created! Check your email to confirm.");
     navigate("/dashboard");
   };
@@ -90,6 +92,12 @@ const SignUp = () => {
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create Account"}
             </Button>
           </form>
+          <p className="text-center text-xs text-muted-foreground">
+            By signing up you agree to our{" "}
+            <Link to="/terms" className="underline hover:text-foreground">Terms</Link>,{" "}
+            <Link to="/privacy" className="underline hover:text-foreground">Privacy</Link>, and{" "}
+            <Link to="/refunds" className="underline hover:text-foreground">Refund</Link> policy.
+          </p>
           <p className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link to="/sign-in" className="text-secondary font-medium hover:underline">Sign in</Link>

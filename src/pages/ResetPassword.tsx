@@ -21,6 +21,42 @@ const ResetPassword = () => {
   const [linkError, setLinkError] = useState("");
   const [continueUrl, setContinueUrl] = useState<string | null>(null);
 
+  const handleContinue = async () => {
+    if (!continueUrl) return;
+
+    setLoading(true);
+    try {
+      const url = new URL(continueUrl);
+      const tokenHash = url.searchParams.get("token") || url.searchParams.get("token_hash");
+      const type = url.searchParams.get("type");
+
+      if (!tokenHash || type !== "recovery") {
+        setLinkError("This reset link is missing its verification token. Please request a fresh password reset email.");
+        setStage("error");
+        return;
+      }
+
+      const { error } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: "recovery",
+      });
+
+      if (error) {
+        setLinkError(error.message);
+        setStage("error");
+        return;
+      }
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setStage("form");
+    } catch {
+      setLinkError("This reset link is malformed. Please request a fresh password reset email.");
+      setStage("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     let mounted = true;
 
@@ -153,10 +189,12 @@ const ResetPassword = () => {
 
           {stage === "confirm" && continueUrl && (
             <Button
-              asChild
+              type="button"
+              onClick={handleContinue}
+              disabled={loading}
               className="w-full rounded-full bg-primary text-primary-foreground font-bold shadow-[4px_4px_0_hsl(var(--foreground))] hover:shadow-[2px_2px_0_hsl(var(--foreground))] hover:translate-x-[2px] hover:translate-y-[2px] transition-all hover:bg-primary"
             >
-              <a href={continueUrl} rel="noopener noreferrer">Continue to reset password</a>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Continue to reset password"}
             </Button>
           )}
 

@@ -156,6 +156,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trending OSS from GitHub */}
+      <section className="border-t bg-background">
+        <TrendingRepos months={12} />
+      </section>
+
       {/* Pricing — dev cards */}
       <section id="pricing" className="relative overflow-hidden border-y bg-muted/40 py-20 sm:py-28">
         <div

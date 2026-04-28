@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Hero from "@/components/Hero";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { TrendingRepos } from "@/components/TrendingRepos";
 
 const stats = [
   { value: "12,400+", label: "developers" },

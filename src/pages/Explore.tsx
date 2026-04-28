@@ -72,16 +72,35 @@ const Explore = () => {
         </div>
 
         {/* Search + Filters */}
-        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search projects..."
+              placeholder="Search projects, or ask Starlet..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 rounded-full border-2"
+              onChange={(e) => { setSearch(e.target.value); if (aiRanked) setAiRanked(null); }}
+              onKeyDown={(e) => { if (e.key === "Enter") runStarletSearch(); }}
+              className="pl-10 pr-10 rounded-full border-2"
             />
+            {search && (
+              <button
+                onClick={() => { setSearch(""); setAiRanked(null); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label="Clear search"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
+          <Button
+            size="sm"
+            onClick={runStarletSearch}
+            disabled={aiLoading}
+            className="rounded-full border-2 border-foreground bg-gradient-to-r from-secondary to-primary text-foreground hover:opacity-90 gap-1.5 font-semibold"
+          >
+            {aiLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
+            Ask Starlet
+          </Button>
           <div className="flex gap-2 overflow-x-auto">
             {categories.map((cat) => (
               <Button
@@ -100,6 +119,16 @@ const Explore = () => {
             ))}
           </div>
         </div>
+
+        {aiRanked && (
+          <div className="mb-6 rounded-xl border-2 border-secondary/40 bg-secondary/5 px-4 py-3 flex items-start gap-3">
+            <StarletBadge />
+            <div className="flex-1 text-sm text-foreground/80 italic">{aiRanked.reason}</div>
+            <button onClick={() => setAiRanked(null)} className="text-xs text-muted-foreground hover:text-foreground underline">
+              clear
+            </button>
+          </div>
+        )}
 
         {/* Grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

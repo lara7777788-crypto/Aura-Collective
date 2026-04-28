@@ -178,7 +178,7 @@ const Index = () => {
             <h2 className="text-3xl font-bold text-foreground sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
               Pick your <span className="bg-gold/60 px-2 rounded">tier</span>.
             </h2>
-            <p className="mt-3 text-foreground/60">No free tier. Pick a plan and ship. 🦄</p>
+            <p className="mt-3 text-foreground/60">No free tier. Pick a plan and ship. 🪐</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {tiers.map((t, i) => (
@@ -284,7 +284,7 @@ const Index = () => {
                 $ aura init <span className="text-white/50">--vibes=unicorns</span>
               </p>
               <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Ready to <span className="bg-gradient-to-r from-gold via-pink-soft to-lavender bg-clip-text text-transparent">resonate</span>? 🦄
+                Ready to <span className="bg-gradient-to-r from-gold via-pink-soft to-lavender bg-clip-text text-transparent">resonate</span>? ✦
               </h2>
               <p className="mx-auto mt-3 max-w-md text-white/70">
                 Join thousands of builders shipping on the open, decentralized web.

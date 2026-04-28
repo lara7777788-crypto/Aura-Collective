@@ -14,7 +14,7 @@ const Footer = () => (
             </span>
           </Link>
           <p className="text-sm text-foreground/70">
-            The open infrastructure for Web4 developers. 🦄
+            The open infrastructure for Web4 developers. 🪐
           </p>
           <div className="mt-4 flex gap-3">
             <a href="#" className="text-foreground/70 hover:text-foreground transition-colors text-sm font-medium">GitHub</a>
@@ -47,7 +47,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-8 border-t border-lavender/40 pt-6 text-center text-xs text-foreground/60">
-        ✦ Built on Vela Protocol · Open source forever 🦄 · © {new Date().getFullYear()} AuraCollective
+        ✦ Built on Vela Protocol · Open source forever ✧ · © {new Date().getFullYear()} AuraCollective
       </div>
     </div>
   </footer>

@@ -119,20 +119,7 @@ export default function StarlitFaerie() {
         )}
       </AnimatePresence>
 
-      {/* Studio dialog opened from faerie click — uses a hidden trigger */}
-      <StarlitStudio
-        trigger={
-          <button
-            ref={(el) => {
-              if (el && studioOpen) {
-                el.click();
-                setStudioOpen(false);
-              }
-            }}
-            className="hidden"
-          />
-        }
-      />
+      <StarlitStudio trigger={null} open={studioOpen} onOpenChange={setStudioOpen} />
     </>
   );
 }

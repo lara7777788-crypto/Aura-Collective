@@ -26,7 +26,7 @@ Rules:
 - Never invent prices, features, refund windows, or policies not listed above.
 - If unsure, recommend emailing lara@loveconcursall.com.`;
 
-type Mode = "summarize" | "search" | "readme" | "tags" | "support";
+type Mode = "summarize" | "search" | "readme" | "tags" | "support" | "name" | "username";
 
 
 Deno.serve(async (req) => {
@@ -152,6 +152,56 @@ function buildRequest(mode: Mode, payload: any) {
         },
       }],
       tool_choice: { type: "function", function: { name: "rank_projects" } },
+    };
+  }
+  if (mode === "name") {
+    return {
+      model: "google/gemini-2.5-flash-lite",
+      messages: [
+        { role: "system", content: SYSTEM },
+        { role: "user", content:
+          `Suggest 5 catchy, short project names based on this idea. Mix of practical + slightly cosmic. Single words or 2 words max, lowercase or kebab-case. No numbers unless meaningful.\n\nIdea: ${payload.idea ?? payload.description ?? ""}` },
+      ],
+      tools: [{
+        type: "function",
+        function: {
+          name: "suggest_names",
+          parameters: {
+            type: "object",
+            properties: {
+              names: { type: "array", items: { type: "string" }, minItems: 5, maxItems: 5 },
+            },
+            required: ["names"],
+            additionalProperties: false,
+          },
+        },
+      }],
+      tool_choice: { type: "function", function: { name: "suggest_names" } },
+    };
+  }
+  if (mode === "username") {
+    return {
+      model: "google/gemini-2.5-flash-lite",
+      messages: [
+        { role: "system", content: SYSTEM },
+        { role: "user", content:
+          `Suggest 5 unique developer usernames based on these interests/vibe. Lowercase, 4-16 chars, letters/numbers/underscores only, no spaces. A touch cosmic but readable.\n\nInterests: ${payload.interests ?? ""}` },
+      ],
+      tools: [{
+        type: "function",
+        function: {
+          name: "suggest_usernames",
+          parameters: {
+            type: "object",
+            properties: {
+              usernames: { type: "array", items: { type: "string" }, minItems: 5, maxItems: 5 },
+            },
+            required: ["usernames"],
+            additionalProperties: false,
+          },
+        },
+      }],
+      tool_choice: { type: "function", function: { name: "suggest_usernames" } },
     };
   }
   if (mode === "support") {

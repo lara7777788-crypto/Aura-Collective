@@ -17,7 +17,7 @@ const Footer = () => {
     setSubscribing(true);
     try {
       const { error } = await supabase.functions.invoke("newsletter-subscribe", {
-        body: { email, tags: ["blog", "footer"] },
+        body: { email, tags: ["aurablog", "footer"] },
       });
       if (error) throw error;
       toast.success("Subscribed! See you next week ✨");

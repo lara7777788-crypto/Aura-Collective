@@ -49,7 +49,7 @@ const tiers = [
   },
   {
     name: "glow",
-    price: "$9",
+    price: "$5",
     desc: "// for radiant builders",
     features: [
       "Unlimited repos",
@@ -65,7 +65,7 @@ const tiers = [
   },
   {
     name: "constellation",
-    price: "$29",
+    price: "$8",
     desc: "// for whole galaxies",
     features: [
       "Everything in glow",

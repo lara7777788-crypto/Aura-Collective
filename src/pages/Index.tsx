@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Hero from "@/components/Hero";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { TrendingRepos } from "@/components/TrendingRepos";
 
 const stats = [
   { value: "12,400+", label: "developers" },
@@ -39,12 +40,12 @@ const pillars = [
 
 const tiers = [
   {
-    name: "spark",
-    price: "$0",
+    name: "starter",
+    price: "$3",
     desc: "// for solo hackers",
-    features: ["3 public repos", "Community access", "Basic model hosting", "1 GB storage"],
-    cta: "init free",
-    priceId: null,
+    features: ["5 public repos", "Community access", "Basic model hosting", "2 GB storage"],
+    cta: "git push --tier starter",
+    priceId: "starter_monthly",
   },
   {
     name: "glow",
@@ -155,6 +156,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trending OSS from GitHub */}
+      <section className="border-t bg-background">
+        <TrendingRepos months={12} />
+      </section>
+
       {/* Pricing — dev cards */}
       <section id="pricing" className="relative overflow-hidden border-y bg-muted/40 py-20 sm:py-28">
         <div
@@ -175,7 +181,7 @@ const Index = () => {
             <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
               Pick your <span className="font-mono">tier</span>.
             </h2>
-            <p className="mt-3 text-muted-foreground">Start free. Upgrade when you outgrow it.</p>
+            <p className="mt-3 text-muted-foreground">No free tier. Pick a plan and ship.</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {tiers.map((t, i) => (

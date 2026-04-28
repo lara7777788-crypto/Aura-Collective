@@ -69,6 +69,8 @@ export function useSubscription() {
       ? "constellation"
       : subscription?.product_id === "glow"
       ? "glow"
+      : subscription?.product_id === "starter"
+      ? "starter"
       : null;
 
   return { subscription, loading: loading || authLoading, isActive, tier };

@@ -7,10 +7,9 @@ const Footer = () => (
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">
-            <span className="text-base leading-none text-foreground" aria-hidden>✦</span>
             <Logo size="sm" />
             <span className="font-bold text-foreground">
-              Aura<span className="text-foreground/60">Collective</span>
+              Collective
             </span>
           </Link>
           <p className="text-sm text-foreground/70">

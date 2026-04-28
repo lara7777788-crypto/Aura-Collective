@@ -41,7 +41,7 @@ const pillars = [
 const tiers = [
   {
     name: "starter",
-    price: "$3",
+    price: "$3 / 3€ / 3 CHF",
     desc: "// for solo hackers",
     features: ["5 public repos", "Community access", "Basic model hosting", "2 GB storage"],
     cta: "git push --tier starter",
@@ -49,7 +49,7 @@ const tiers = [
   },
   {
     name: "glow",
-    price: "$5",
+    price: "$5 / 5€ / 5 CHF",
     desc: "// for radiant builders",
     features: [
       "Unlimited repos",
@@ -65,7 +65,7 @@ const tiers = [
   },
   {
     name: "constellation",
-    price: "$8",
+    price: "$8 / 8€ / 8 CHF",
     desc: "// for whole galaxies",
     features: [
       "Everything in glow",

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Shield, Users, Lock, Eye, Heart, Scale, Handshake, Sparkles, ChevronDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
+import velaWatermark from "@/assets/vela-watermark.png";
 
 const values = [
   {
@@ -278,6 +279,20 @@ const About = () => (
             </div>
           </CardContent>
         </Card>
+      </div>
+    </section>
+
+    {/* Built by Vela */}
+    <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+      <div className="flex flex-col items-center gap-4 text-center">
+        <img
+          src={velaWatermark}
+          alt="Vela"
+          className="h-32 w-32 select-none sm:h-40 sm:w-40"
+        />
+        <p className="text-sm text-muted-foreground">
+          Built by <span className="font-semibold text-foreground">Vela</span> for AuraCollective.
+        </p>
       </div>
     </section>
   </>

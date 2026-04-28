@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, GitFork, Download, Filter, Sparkles } from "lucide-react";
+import { Search, GitFork, Download, Filter, Sparkles, Loader2, Wand2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import StarButton from "@/components/StarButton";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
 import { TrendingRepos } from "@/components/TrendingRepos";
+import { StarletBadge } from "@/components/StarletBadge";
+import { askStarlet } from "@/lib/starlet";
+import { toast } from "sonner";
 
 const categories = ["All", "Models", "Code", "Datasets", "Tools"];
 
@@ -22,12 +25,37 @@ const mockProjects = [
 const Explore = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [aiRanked, setAiRanked] = useState<{ ids: string[]; reason: string } | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
-  const filtered = mockProjects.filter((p) => {
+  const runStarletSearch = async () => {
+    if (!search.trim()) { toast.info("Type what you're looking for first"); return; }
+    setAiLoading(true);
+    try {
+      const result = await askStarlet<{ ids: string[]; reason: string }>("search", {
+        query: search,
+        projects: mockProjects.map(p => ({ id: p.id, title: p.title, desc: p.desc, tags: p.tags })),
+      });
+      setAiRanked(result);
+    } catch (e: any) {
+      toast.error(e.message || "Starlet couldn't help right now");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  let filtered = mockProjects.filter((p) => {
     const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) || p.desc.toLowerCase().includes(search.toLowerCase());
     const matchCat = activeCategory === "All" || p.category === activeCategory;
     return matchSearch && matchCat;
   });
+
+  if (aiRanked) {
+    const order = new Map(aiRanked.ids.map((id, i) => [id, i]));
+    filtered = mockProjects
+      .filter(p => order.has(p.id))
+      .sort((a, b) => (order.get(a.id)! - order.get(b.id)!));
+  }
 
   return (
     <div className="relative">

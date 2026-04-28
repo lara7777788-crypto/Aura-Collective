@@ -27,12 +27,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
+    <nav className="sticky top-0 z-50 border-b border-lavender/40 bg-white/85 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2">
+          <span className="text-lg leading-none text-foreground" aria-hidden>✦</span>
           <Logo />
           <span className="text-lg font-bold text-foreground">
-            Aura<span className="text-secondary">Collective</span>
+            Aura<span className="text-foreground/60">Collective</span>
           </span>
         </Link>
 
@@ -42,10 +43,10 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${
+              className={`rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-lavender/30 ${
                 location.pathname === link.path
-                  ? "text-secondary"
-                  : "text-muted-foreground"
+                  ? "text-foreground bg-lavender/40"
+                  : "text-foreground/70"
               }`}
             >
               {link.label}

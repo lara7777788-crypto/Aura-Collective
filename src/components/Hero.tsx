@@ -45,7 +45,7 @@ const Hero = () => (
         <motion.img
           src={unicornMascot}
           alt="AuraCollective unicorn mascot"
-          className="absolute -top-10 -left-4 h-24 w-24 sm:h-28 sm:w-28 select-none drop-shadow-[0_8px_20px_hsl(var(--lavender)/0.5)]"
+          className="absolute -top-16 -left-4 h-24 w-24 sm:h-28 sm:w-28 select-none drop-shadow-[0_8px_20px_hsl(var(--lavender)/0.5)]"
           animate={{ y: [0, -8, 0], rotate: [-2, 3, -2] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />

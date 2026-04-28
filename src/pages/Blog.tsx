@@ -126,14 +126,23 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Blog — AuraCollective | Weekly Web4 GitHub trends</title>
-        <meta
-          name="description"
-          content="Weekly editorial on what's trending on GitHub: standout repos, themes, and open-source momentum on Web4. Published every Monday."
-        />
-        <link rel="canonical" href="https://auracollective.io/blog" />
-      </Helmet>
+  useEffect(() => {
+    document.title = "Blog — AuraCollective | Weekly Web4 GitHub trends";
+    const meta = document.querySelector('meta[name="description"]') || (() => {
+      const m = document.createElement("meta");
+      m.setAttribute("name", "description");
+      document.head.appendChild(m);
+      return m;
+    })();
+    meta.setAttribute(
+      "content",
+      "Weekly editorial on what's trending on GitHub: standout repos, themes, and open-source momentum on Web4. Published every Monday."
+    );
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background">
+
 
       <article className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
         <div className="mb-2 flex items-center gap-2 text-sm text-foreground/60">

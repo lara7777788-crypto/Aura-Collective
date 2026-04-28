@@ -37,8 +37,10 @@ const SignUp = () => {
       toast.error(error.message);
       return;
     }
-    // Fire-and-forget: add to Mailchimp audience with 'aura' tag
-    supabase.functions.invoke("mailchimp-subscribe", { body: { tags: ["aura"] } }).catch(() => {});
+    // Fire-and-forget: add to Mailchimp audience with 'aura' tag (only if we have a session — i.e., email confirmation is off)
+    if (data.session) {
+      supabase.functions.invoke("mailchimp-subscribe", { body: { tags: ["aura"] } }).catch(() => {});
+    }
     // Fire-and-forget: send branded welcome email
     const userId = data.user?.id ?? crypto.randomUUID();
     supabase.functions.invoke("send-transactional-email", {

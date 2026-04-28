@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, GitFork, Download, Filter, Sparkles } from "lucide-react";
+import { Search, GitFork, Download, Filter, Sparkles, Loader2, Wand2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import StarButton from "@/components/StarButton";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
 import { TrendingRepos } from "@/components/TrendingRepos";
+import { StarletBadge } from "@/components/StarletBadge";
+import { askStarlet } from "@/lib/starlet";
+import { toast } from "sonner";
 
 const categories = ["All", "Models", "Code", "Datasets", "Tools"];
 
@@ -22,12 +25,37 @@ const mockProjects = [
 const Explore = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [aiRanked, setAiRanked] = useState<{ ids: string[]; reason: string } | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
-  const filtered = mockProjects.filter((p) => {
+  const runStarletSearch = async () => {
+    if (!search.trim()) { toast.info("Type what you're looking for first"); return; }
+    setAiLoading(true);
+    try {
+      const result = await askStarlet<{ ids: string[]; reason: string }>("search", {
+        query: search,
+        projects: mockProjects.map(p => ({ id: p.id, title: p.title, desc: p.desc, tags: p.tags })),
+      });
+      setAiRanked(result);
+    } catch (e: any) {
+      toast.error(e.message || "Starlet couldn't help right now");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  let filtered = mockProjects.filter((p) => {
     const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) || p.desc.toLowerCase().includes(search.toLowerCase());
     const matchCat = activeCategory === "All" || p.category === activeCategory;
     return matchSearch && matchCat;
   });
+
+  if (aiRanked) {
+    const order = new Map(aiRanked.ids.map((id, i) => [id, i]));
+    filtered = mockProjects
+      .filter(p => order.has(p.id))
+      .sort((a, b) => (order.get(a.id)! - order.get(b.id)!));
+  }
 
   return (
     <div className="relative">
@@ -44,16 +72,35 @@ const Explore = () => {
         </div>
 
         {/* Search + Filters */}
-        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search projects..."
+              placeholder="Search projects, or ask Starlet..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 rounded-full border-2"
+              onChange={(e) => { setSearch(e.target.value); if (aiRanked) setAiRanked(null); }}
+              onKeyDown={(e) => { if (e.key === "Enter") runStarletSearch(); }}
+              className="pl-10 pr-10 rounded-full border-2"
             />
+            {search && (
+              <button
+                onClick={() => { setSearch(""); setAiRanked(null); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label="Clear search"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
+          <Button
+            size="sm"
+            onClick={runStarletSearch}
+            disabled={aiLoading}
+            className="rounded-full border-2 border-foreground bg-gradient-to-r from-secondary to-primary text-foreground hover:opacity-90 gap-1.5 font-semibold"
+          >
+            {aiLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
+            Ask Starlet
+          </Button>
           <div className="flex gap-2 overflow-x-auto">
             {categories.map((cat) => (
               <Button
@@ -72,6 +119,16 @@ const Explore = () => {
             ))}
           </div>
         </div>
+
+        {aiRanked && (
+          <div className="mb-6 rounded-xl border-2 border-secondary/40 bg-secondary/5 px-4 py-3 flex items-start gap-3">
+            <StarletBadge />
+            <div className="flex-1 text-sm text-foreground/80 italic">{aiRanked.reason}</div>
+            <button onClick={() => setAiRanked(null)} className="text-xs text-muted-foreground hover:text-foreground underline">
+              clear
+            </button>
+          </div>
+        )}
 
         {/* Grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

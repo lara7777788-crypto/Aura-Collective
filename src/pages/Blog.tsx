@@ -40,8 +40,6 @@ function weekRangeLabel(d = new Date()) {
   return `${fmt(monday)} – ${fmt(sunday)}, ${sunday.getUTCFullYear()}`;
 }
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 export default function Blog() {
   const week = isoWeekKey();

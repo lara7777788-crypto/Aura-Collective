@@ -65,7 +65,7 @@ export default function StarlitFaerie() {
               x: { repeat: Infinity, duration: 8, ease: "easeInOut" },
               y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
             }}
-            className="fixed bottom-6 right-6 z-[60] select-none"
+            className="fixed left-6 top-1/4 z-[60] select-none"
           >
             {/* Tip bubble */}
             <AnimatePresence>

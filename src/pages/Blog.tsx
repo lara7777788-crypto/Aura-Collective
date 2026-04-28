@@ -67,33 +67,11 @@ export default function Blog() {
 
     (async () => {
       try {
-        // Fetch trending repos from the past month, top 8
-        const r = await fetch(
-          `${SUPABASE_URL}/functions/v1/github-trending?months=1&per_page=8`,
-          { headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } }
-        );
-        const data = await r.json();
-        const items: Repo[] = data.repos || [];
+        const { data, error } = await supabase.functions.invoke("blog-weekly", { body: {} });
+        if (error) throw error;
+        const items: Repo[] = (data?.repos as Repo[]) || [];
+        const text: string = (data?.post as string) || "";
         setRepos(items);
-
-        // Ask Starlet (Lovable AI) to write a short weekly post
-        const summaryInput = items.slice(0, 6).map(it =>
-          `- ${it.name} (${it.stars}⭐, ${it.language ?? "—"}): ${it.description ?? ""}`
-        ).join("\n");
-
-        const aiRes = await supabase.functions.invoke("starlet", {
-          body: {
-            mode: "summarize",
-            text: `You are writing the AuraCollective weekly blog post for the week of ${weekRangeLabel()}.\n\nWrite a friendly, concise editorial (about 180–230 words, no headings, no bullets, no markdown) covering what's trending on GitHub this week. Highlight standout themes across these repos getting stars, mention 3–4 by name, and end with a short reflective line about open-source momentum on Web4. Keep tone warm, professional, a touch cosmic.\n\nRepos:\n${summaryInput}`,
-          },
-        });
-
-        const text =
-          (aiRes.data?.summary as string) ||
-          (aiRes.data?.text as string) ||
-          (aiRes.data?.result as string) ||
-          "";
-
         setPost(text);
         localStorage.setItem(cacheKey, JSON.stringify({ repos: items, post: text }));
       } catch (e) {

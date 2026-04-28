@@ -65,7 +65,7 @@ export default function StarlitFaerie() {
               x: { repeat: Infinity, duration: 8, ease: "easeInOut" },
               y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
             }}
-            className="fixed left-6 top-1/4 z-[60] select-none"
+            className="fixed right-6 top-20 z-[60] select-none"
           >
             {/* Tip bubble */}
             <AnimatePresence>
@@ -74,7 +74,7 @@ export default function StarlitFaerie() {
                   initial={{ opacity: 0, y: 8, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.9 }}
-                  className="absolute left-full top-0 ml-3 w-60 rounded-2xl border-2 border-foreground bg-white p-3 text-xs text-foreground shadow-[4px_4px_0_hsl(var(--foreground))]"
+                  className="absolute right-full top-0 mr-3 w-60 rounded-2xl border-2 border-foreground bg-white p-3 text-xs text-foreground shadow-[4px_4px_0_hsl(var(--foreground))]"
                 >
                   <button
                     onClick={() => setTipOpen(false)}

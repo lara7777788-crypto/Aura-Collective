@@ -12,8 +12,8 @@ import { toast } from "sonner";
 
 const tierLabels: Record<string, { name: string; price: string }> = {
   starter: { name: "Starter", price: "$3 / mo" },
-  glow: { name: "Glow", price: "$9 / mo" },
-  constellation: { name: "Constellation", price: "$29 / mo" },
+  glow: { name: "Glow", price: "$5 / mo" },
+  constellation: { name: "Constellation", price: "$8 / mo" },
 };
 
 const statusColors: Record<string, string> = {
@@ -88,10 +88,10 @@ const Billing = () => {
             </div>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
               <Button onClick={() => openCheckout("glow_monthly")} disabled={checkoutLoading} variant="outline" className="rounded-full">
-                Glow — $9/mo
+                Glow — $5/mo
               </Button>
               <Button onClick={() => openCheckout("constellation_monthly")} disabled={checkoutLoading} className="rounded-full bg-foreground text-background hover:bg-foreground/90">
-                Constellation — $29/mo
+                Constellation — $8/mo
               </Button>
             </div>
           </CardContent>

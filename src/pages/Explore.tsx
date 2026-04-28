@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import StarButton from "@/components/StarButton";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
+import { TrendingRepos } from "@/components/TrendingRepos";
 
 const categories = ["All", "Models", "Code", "Datasets", "Tools"];
 
@@ -117,6 +118,11 @@ const Explore = () => {
             <p>No projects found in this corner of the cosmos.</p>
           </div>
         )}
+      </div>
+
+      {/* Live OSS from GitHub — past 5 months */}
+      <div className="border-t border-lavender/40 bg-white/60 backdrop-blur-sm">
+        <TrendingRepos months={5} />
       </div>
     </div>
   );

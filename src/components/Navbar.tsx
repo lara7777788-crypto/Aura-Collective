@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-lavender/40 bg-white/85 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" aria-label="AuraCollective home" className="flex items-center gap-2 transition-opacity hover:opacity-80">
           <Logo />
           <span className="text-lg font-bold text-foreground">
             Collective

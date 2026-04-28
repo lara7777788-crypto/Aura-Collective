@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      crypto_payments: {
+        Row: {
+          amount_usd: number
+          chain: string
+          created_at: string
+          duration_months: number
+          from_address: string
+          id: string
+          status: string
+          tier: string
+          to_address: string
+          token: string
+          tx_hash: string
+          user_id: string
+          verified_at: string | null
+        }
+        Insert: {
+          amount_usd: number
+          chain: string
+          created_at?: string
+          duration_months: number
+          from_address: string
+          id?: string
+          status?: string
+          tier: string
+          to_address: string
+          token?: string
+          tx_hash: string
+          user_id: string
+          verified_at?: string | null
+        }
+        Update: {
+          amount_usd?: number
+          chain?: string
+          created_at?: string
+          duration_months?: number
+          from_address?: string
+          id?: string
+          status?: string
+          tier?: string
+          to_address?: string
+          token?: string
+          tx_hash?: string
+          user_id?: string
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

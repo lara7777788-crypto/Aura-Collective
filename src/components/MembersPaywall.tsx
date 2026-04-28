@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Lock, Sparkles, Check, ArrowRight } from "lucide-react";
+import { Lock, Sparkles, Check, ArrowRight, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
 import AnimatedUnicorn from "@/components/AnimatedUnicorn";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import CryptoCheckoutDialog from "@/components/CryptoCheckoutDialog";
+import type { Tier } from "@/lib/crypto";
 
 const perks = [
   "Private model & dataset hosting",
@@ -17,6 +20,9 @@ const perks = [
 
 const MembersPaywall = () => {
   const { openCheckout, loading } = usePaddleCheckout();
+  const [cryptoOpen, setCryptoOpen] = useState(false);
+  const [cryptoTier, setCryptoTier] = useState<Tier>("glow");
+  const openCrypto = (t: Tier) => { setCryptoTier(t); setCryptoOpen(true); };
 
   return (
     <div className="relative min-h-[80vh] overflow-hidden">
@@ -77,20 +83,40 @@ const MembersPaywall = () => {
                   disabled={loading}
                   className="w-full font-semibold rounded-full border-2 border-foreground bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2"
                 >
-                  Light it up · $9/mo <ArrowRight className="h-4 w-4" />
+                  Glow · $5/mo <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
                   onClick={() => openCheckout("constellation_monthly")}
                   disabled={loading}
                   className="w-full font-semibold rounded-full border-2 border-foreground bg-background text-foreground hover:bg-foreground hover:text-background gap-2"
                 >
-                  Form your galaxy · $29/mo <ArrowRight className="h-4 w-4" />
+                  Constellation · $8/mo <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
 
+              <div className="mt-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border" />
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground">or pay with crypto</span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+
+              <Button
+                onClick={() => openCrypto("glow")}
+                variant="outline"
+                className="mt-3 w-full font-semibold rounded-full border-2 border-foreground gap-2"
+              >
+                <Wallet className="h-4 w-4" /> Pay with USDC (MetaMask)
+              </Button>
+
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                Cancel anytime. Test mode is active in the preview — no real charges.
+                Cancel anytime. Card payments are in test mode in the preview.
               </p>
+
+              <CryptoCheckoutDialog
+                open={cryptoOpen}
+                onOpenChange={setCryptoOpen}
+                defaultTier={cryptoTier}
+              />
             </CardContent>
           </Card>
 

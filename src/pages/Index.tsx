@@ -20,21 +20,21 @@ const pillars = [
     title: "Models",
     cmd: "aura model push aura-llm-7b",
     desc: "Host, version, and serve AI models with built-in inference endpoints.",
-    accent: "text-yellow-500",
+    iconBg: "bg-gold",
   },
   {
     icon: Code2,
     title: "Code",
     cmd: "git remote add aura …",
     desc: "Publish projects, open PRs, ship faster. Git-compatible from day one.",
-    accent: "text-pink-500",
+    iconBg: "bg-pink-soft",
   },
   {
     icon: Database,
     title: "Datasets",
     cmd: "aura dataset pull --tag nlp",
     desc: "Discover, fork, and version datasets for training and evaluation.",
-    accent: "text-purple-500",
+    iconBg: "bg-lavender",
   },
 ];
 

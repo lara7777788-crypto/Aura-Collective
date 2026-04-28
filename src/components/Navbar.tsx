@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import Logo from "./Logo";
-import StarletStudio from "./StarletStudio";
+import StarlitStudio from "./StarlitStudio";
 
 const navLinks = [
   { label: "Explore", path: "/explore" },
@@ -57,10 +57,10 @@ const Navbar = () => {
         <div className="hidden items-center gap-3 md:flex">
           {user ? (
             <>
-              <StarletStudio
+              <StarlitStudio
                 trigger={
                   <Button variant="ghost" size="sm" className="gap-2 text-secondary hover:text-secondary hover:bg-secondary/10">
-                    <Wand2 className="h-4 w-4" /> Starlet
+                    <Wand2 className="h-4 w-4" /> Starlit
                   </Button>
                 }
               />

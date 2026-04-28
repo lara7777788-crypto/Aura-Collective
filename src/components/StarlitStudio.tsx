@@ -6,15 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { askStarlet } from "@/lib/starlet";
-import { StarletBadge } from "./StarletBadge";
+import { askStarlit } from "@/lib/starlit";
+import { StarlitBadge } from "./StarlitBadge";
 import { toast } from "sonner";
 
 interface Props {
   trigger?: React.ReactNode;
 }
 
-export default function StarletStudio({ trigger }: Props) {
+export default function StarlitStudio({ trigger }: Props) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -35,17 +35,17 @@ export default function StarletStudio({ trigger }: Props) {
     setLoading(mode === "summarize" ? "summary" : mode);
     try {
       if (mode === "summarize") {
-        const r = await askStarlet<{ text: string }>("summarize", { title, description, tags });
+        const r = await askStarlit<{ text: string }>("summarize", { title, description, tags });
         setSummary(r.text.trim());
       } else if (mode === "tags") {
-        const r = await askStarlet<{ tags: string[] }>("tags", { title, description });
+        const r = await askStarlit<{ tags: string[] }>("tags", { title, description });
         setTags(r.tags);
       } else {
-        const r = await askStarlet<{ text: string }>("readme", { title, description, tags });
+        const r = await askStarlit<{ text: string }>("readme", { title, description, tags });
         setReadme(r.text);
       }
     } catch (e: any) {
-      toast.error(e.message || "Starlet stumbled");
+      toast.error(e.message || "Starlit stumbled");
     } finally {
       setLoading(null);
     }
@@ -62,14 +62,14 @@ export default function StarletStudio({ trigger }: Props) {
       <DialogTrigger asChild>
         {trigger ?? (
           <Button variant="outline" className="rounded-full border-2 gap-2">
-            <Wand2 className="h-4 w-4" /> Starlet Studio
+            <Wand2 className="h-4 w-4" /> Starlit Studio
           </Button>
         )}
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            Starlet Studio <StarletBadge />
+            Starlit Studio <StarlitBadge />
           </DialogTitle>
           <DialogDescription>
             Your AI sidekick for shaping projects — summaries, tags, and a starter README.

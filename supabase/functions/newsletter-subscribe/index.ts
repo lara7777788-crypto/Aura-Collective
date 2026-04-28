@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
       return json({ error: "Invalid email" }, 400);
     }
 
-    const tags = Array.from(new Set(["aura", "blog", ...extraTags]));
+    const tags = Array.from(new Set(["aurablog", ...extraTags]));
     const subscriberHash = await md5(email);
     const url = `https://${dc}.api.mailchimp.com/3.0/lists/${audienceId}/members/${subscriberHash}`;
 

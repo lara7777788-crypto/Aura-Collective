@@ -87,7 +87,7 @@ export default function Blog() {
     setSubscribing(true);
     try {
       const { error } = await supabase.functions.invoke("newsletter-subscribe", {
-        body: { email, tags: ["blog"] },
+        body: { email, tags: ["aurablog"] },
       });
       if (error) throw error;
       toast.success("Subscribed! See you next week ✨");

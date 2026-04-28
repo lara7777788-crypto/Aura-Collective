@@ -18,6 +18,7 @@ import Admin from "./pages/Admin";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Refunds from "./pages/Refunds";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -48,6 +49,7 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/refunds" element={<Refunds />} />
+              <Route path="/unsubscribe" element={<Unsubscribe />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

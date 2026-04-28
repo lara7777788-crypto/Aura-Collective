@@ -22,8 +22,9 @@ export const RecoveryEmail = ({
   siteName,
   confirmationUrl,
 }: RecoveryEmailProps) => {
-  const safeUrl = new URL(confirmationUrl)
-  const continueUrl = `https://auracollective.io/reset-password?continue=${encodeURIComponent(confirmationUrl)}`
+  const actionUrl = new URL(confirmationUrl)
+  const resetUrl = actionUrl.searchParams.get('redirect_to') || 'https://auracollective.io/reset-password'
+  const continueUrl = `${resetUrl}${resetUrl.includes('?') ? '&' : '?'}continue=${encodeURIComponent(confirmationUrl)}`
 
   return (
     <Html lang="en" dir="ltr">

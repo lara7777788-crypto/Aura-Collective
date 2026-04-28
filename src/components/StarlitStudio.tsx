@@ -63,13 +63,15 @@ export default function StarlitStudio({ trigger, open: openProp, onOpenChange }:
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {trigger ?? (
-          <Button variant="outline" className="rounded-full border-2 gap-2">
-            <Wand2 className="h-4 w-4" /> Starlit Studio
-          </Button>
-        )}
-      </DialogTrigger>
+      {(trigger !== null) && (
+        <DialogTrigger asChild>
+          {trigger ?? (
+            <Button variant="outline" className="rounded-full border-2 gap-2">
+              <Wand2 className="h-4 w-4" /> Starlit Studio
+            </Button>
+          )}
+        </DialogTrigger>
+      )}
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">

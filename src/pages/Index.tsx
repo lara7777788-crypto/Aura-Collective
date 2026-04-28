@@ -39,12 +39,12 @@ const pillars = [
 
 const tiers = [
   {
-    name: "spark",
-    price: "$0",
+    name: "starter",
+    price: "$3",
     desc: "// for solo hackers",
-    features: ["3 public repos", "Community access", "Basic model hosting", "1 GB storage"],
-    cta: "init free",
-    priceId: null,
+    features: ["5 public repos", "Community access", "Basic model hosting", "2 GB storage"],
+    cta: "git push --tier starter",
+    priceId: "starter_monthly",
   },
   {
     name: "glow",

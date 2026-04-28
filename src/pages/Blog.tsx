@@ -124,8 +124,6 @@ export default function Blog() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background">
   useEffect(() => {
     document.title = "Blog — AuraCollective | Weekly Web4 GitHub trends";
     const meta = document.querySelector('meta[name="description"]') || (() => {
@@ -142,7 +140,6 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background">
-
 
       <article className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
         <div className="mb-2 flex items-center gap-2 text-sm text-foreground/60">

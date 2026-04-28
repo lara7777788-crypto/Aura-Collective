@@ -175,7 +175,7 @@ const Index = () => {
             <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
               Pick your <span className="font-mono">tier</span>.
             </h2>
-            <p className="mt-3 text-muted-foreground">Start free. Upgrade when you outgrow it.</p>
+            <p className="mt-3 text-muted-foreground">No free tier. Pick a plan and ship.</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {tiers.map((t, i) => (

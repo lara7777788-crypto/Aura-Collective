@@ -1,8 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export type StarletMode = "summarize" | "search" | "readme" | "tags";
+export type StarlitMode = "summarize" | "search" | "readme" | "tags";
 
-export async function askStarlet<T = any>(mode: StarletMode, payload: any): Promise<T> {
+export async function askStarlit<T = any>(mode: StarlitMode, payload: any): Promise<T> {
   const { data, error } = await supabase.functions.invoke("starlet", {
     body: { mode, payload },
   });

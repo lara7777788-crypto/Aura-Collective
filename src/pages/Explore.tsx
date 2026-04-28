@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import StarButton from "@/components/StarButton";
 import CosmicBackdrop from "@/components/CosmicBackdrop";
 import { TrendingRepos } from "@/components/TrendingRepos";
-import { StarletBadge } from "@/components/StarletBadge";
-import { askStarlet } from "@/lib/starlet";
+import { StarlitBadge } from "@/components/StarlitBadge";
+import { askStarlit } from "@/lib/starlit";
 import { toast } from "sonner";
 
 const categories = ["All", "Models", "Code", "Datasets", "Tools"];
@@ -28,17 +28,17 @@ const Explore = () => {
   const [aiRanked, setAiRanked] = useState<{ ids: string[]; reason: string } | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
-  const runStarletSearch = async () => {
+  const runStarlitSearch = async () => {
     if (!search.trim()) { toast.info("Type what you're looking for first"); return; }
     setAiLoading(true);
     try {
-      const result = await askStarlet<{ ids: string[]; reason: string }>("search", {
+      const result = await askStarlit<{ ids: string[]; reason: string }>("search", {
         query: search,
         projects: mockProjects.map(p => ({ id: p.id, title: p.title, desc: p.desc, tags: p.tags })),
       });
       setAiRanked(result);
     } catch (e: any) {
-      toast.error(e.message || "Starlet couldn't help right now");
+      toast.error(e.message || "Starlit couldn't help right now");
     } finally {
       setAiLoading(false);
     }
@@ -76,10 +76,10 @@ const Explore = () => {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search projects, or ask Starlet..."
+              placeholder="Search projects, or ask Starlit..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); if (aiRanked) setAiRanked(null); }}
-              onKeyDown={(e) => { if (e.key === "Enter") runStarletSearch(); }}
+              onKeyDown={(e) => { if (e.key === "Enter") runStarlitSearch(); }}
               className="pl-10 pr-10 rounded-full border-2"
             />
             {search && (
@@ -94,12 +94,12 @@ const Explore = () => {
           </div>
           <Button
             size="sm"
-            onClick={runStarletSearch}
+            onClick={runStarlitSearch}
             disabled={aiLoading}
             className="rounded-full border-2 border-foreground bg-gradient-to-r from-secondary to-primary text-foreground hover:opacity-90 gap-1.5 font-semibold"
           >
             {aiLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
-            Ask Starlet
+            Ask Starlit
           </Button>
           <div className="flex gap-2 overflow-x-auto">
             {categories.map((cat) => (
@@ -122,7 +122,7 @@ const Explore = () => {
 
         {aiRanked && (
           <div className="mb-6 rounded-xl border-2 border-secondary/40 bg-secondary/5 px-4 py-3 flex items-start gap-3">
-            <StarletBadge />
+            <StarlitBadge />
             <div className="flex-1 text-sm text-foreground/80 italic">{aiRanked.reason}</div>
             <button onClick={() => setAiRanked(null)} className="text-xs text-muted-foreground hover:text-foreground underline">
               clear

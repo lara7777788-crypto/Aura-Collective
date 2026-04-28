@@ -83,14 +83,14 @@ const MembersPaywall = () => {
                   disabled={loading}
                   className="w-full font-semibold rounded-full border-2 border-foreground bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2"
                 >
-                  Glow · $5/mo <ArrowRight className="h-4 w-4" />
+                  Glow · $5 / 5€ / 5 CHF <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
                   onClick={() => openCheckout("constellation_monthly")}
                   disabled={loading}
                   className="w-full font-semibold rounded-full border-2 border-foreground bg-background text-foreground hover:bg-foreground hover:text-background gap-2"
                 >
-                  Constellation · $8/mo <ArrowRight className="h-4 w-4" />
+                  Constellation · $8 / 8€ / 8 CHF <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
 

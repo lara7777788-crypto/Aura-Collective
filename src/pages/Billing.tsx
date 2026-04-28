@@ -11,9 +11,9 @@ import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
 import { toast } from "sonner";
 
 const tierLabels: Record<string, { name: string; price: string }> = {
-  starter: { name: "Starter", price: "$3 / mo" },
-  glow: { name: "Glow", price: "$5 / mo" },
-  constellation: { name: "Constellation", price: "$8 / mo" },
+  starter: { name: "Starter", price: "$3 / 3€ / 3 CHF" },
+  glow: { name: "Glow", price: "$5 / 5€ / 5 CHF" },
+  constellation: { name: "Constellation", price: "$8 / 8€ / 8 CHF" },
 };
 
 const statusColors: Record<string, string> = {
@@ -88,10 +88,10 @@ const Billing = () => {
             </div>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
               <Button onClick={() => openCheckout("glow_monthly")} disabled={checkoutLoading} variant="outline" className="rounded-full">
-                Glow — $5/mo
+                Glow — $5 / 5€ / 5 CHF
               </Button>
               <Button onClick={() => openCheckout("constellation_monthly")} disabled={checkoutLoading} className="rounded-full bg-foreground text-background hover:bg-foreground/90">
-                Constellation — $8/mo
+                Constellation — $8 / 8€ / 8 CHF
               </Button>
             </div>
           </CardContent>

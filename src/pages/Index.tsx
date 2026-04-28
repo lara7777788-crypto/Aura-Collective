@@ -163,27 +163,22 @@ const Index = () => {
         <TrendingRepos months={12} />
       </section>
 
-      {/* Pricing — dev cards */}
-      <section id="pricing" className="relative overflow-hidden border-y bg-muted/40 py-20 sm:py-28">
+      {/* Pricing — soft white with lavender accents */}
+      <section id="pricing" className="relative overflow-hidden bg-white py-20 sm:py-28">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.4]"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            maskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)",
-          }}
+          className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full opacity-30 blur-3xl"
+          style={{ background: "radial-gradient(circle, hsl(var(--lavender)), transparent 70%)" }}
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-14 text-center">
-            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-secondary">
-              // pricing.json
+            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-foreground/50">
+              ✦ pricing.json
             </p>
-            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-              Pick your <span className="font-mono">tier</span>.
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Pick your <span className="bg-gold/60 px-2 rounded">tier</span>.
             </h2>
-            <p className="mt-3 text-muted-foreground">No free tier. Pick a plan and ship.</p>
+            <p className="mt-3 text-foreground/60">No free tier. Pick a plan and ship. 🦄</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {tiers.map((t, i) => (
@@ -196,30 +191,31 @@ const Index = () => {
                 custom={i}
               >
                 <Card
-                  className={`relative h-full flex flex-col overflow-hidden rounded-xl border ${
+                  className={`relative h-full flex flex-col overflow-hidden rounded-2xl border-2 ${
                     t.highlight
-                      ? "border-foreground bg-card shadow-[8px_8px_0_hsl(var(--foreground))]"
-                      : "border-border bg-card"
+                      ? "border-foreground bg-white shadow-[8px_8px_0_hsl(var(--gold))]"
+                      : "border-lavender/60 bg-white shadow-[4px_4px_0_hsl(var(--lavender)/0.4)]"
                   }`}
                 >
                   {t.highlight && (
-                    <div className="absolute right-3 top-3 rounded-md bg-foreground px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-background">
-                      ★ recommended
+                    <div className="absolute right-3 top-3 rounded-full border border-foreground bg-gold px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase text-foreground">
+                      ✦ recommended
                     </div>
                   )}
-                  {/* Tier title bar */}
-                  <div className="border-b border-border bg-muted/40 px-5 py-2 font-mono text-[11px] text-muted-foreground">
-                    <span className="text-secondary">~/</span>tier/{t.name}.toml
+                  <div className={`border-b px-5 py-2 font-mono text-[11px] ${
+                    t.highlight ? "border-foreground/20 bg-gold/30 text-foreground" : "border-lavender/40 bg-lavender/20 text-foreground/70"
+                  }`}>
+                    <span className="text-foreground/50">~/</span>tier/{t.name}.toml
                   </div>
                   <CardHeader className="pb-3">
-                    <CardTitle className="font-mono text-2xl lowercase tracking-tight">
+                    <CardTitle className="font-mono text-2xl lowercase tracking-tight text-foreground">
                       {t.name}
                     </CardTitle>
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-4xl font-extrabold text-foreground">{t.price}</span>
-                      <span className="font-mono text-sm text-muted-foreground">/mo</span>
+                      <span className="font-mono text-sm text-foreground/50">/mo</span>
                     </div>
-                    <CardDescription className="font-mono text-xs text-muted-foreground">
+                    <CardDescription className="font-mono text-xs text-foreground/50">
                       {t.desc}
                     </CardDescription>
                   </CardHeader>
@@ -231,7 +227,7 @@ const Index = () => {
                           className="flex items-start gap-2 font-mono text-[13px] text-foreground/80"
                         >
                           <Check
-                            className="mt-0.5 h-4 w-4 shrink-0 text-secondary"
+                            className="mt-0.5 h-4 w-4 shrink-0 text-foreground"
                             strokeWidth={3}
                           />
                           {f}
@@ -242,10 +238,10 @@ const Index = () => {
                       <Button
                         onClick={() => openCheckout(t.priceId!)}
                         disabled={loading}
-                        className={`w-full gap-2 rounded-md font-mono text-sm ${
+                        className={`w-full gap-2 rounded-full font-mono text-sm ${
                           t.highlight
                             ? "bg-foreground text-background hover:bg-foreground/90"
-                            : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                            : "bg-lavender text-foreground hover:bg-lavender/80"
                         }`}
                       >
                         <Terminal className="h-3.5 w-3.5" />
@@ -255,7 +251,7 @@ const Index = () => {
                       <Link to="/sign-up" className="block">
                         <Button
                           variant="outline"
-                          className="w-full gap-2 rounded-md border-foreground/80 font-mono text-sm hover:bg-foreground hover:text-background"
+                          className="w-full gap-2 rounded-full border-foreground/80 font-mono text-sm hover:bg-foreground hover:text-background"
                         >
                           <Terminal className="h-3.5 w-3.5" />
                           {t.cta}
@@ -270,46 +266,48 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA — terminal prompt */}
-      <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28">
-        <div className="overflow-hidden rounded-xl border-2 border-foreground bg-[hsl(330_20%_6%)] text-white shadow-[8px_8px_0_hsl(var(--secondary))]">
-          <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-2">
-            <div className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-300/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+      {/* CTA — terminal on soft teal */}
+      <section className="bg-teal/40 py-20 sm:py-28">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="overflow-hidden rounded-2xl border-2 border-foreground bg-[hsl(240_25%_10%)] text-white shadow-[8px_8px_0_hsl(var(--lavender))]">
+            <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-2">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-pink-soft" />
+                <span className="h-2.5 w-2.5 rounded-full bg-gold" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/80" />
+              </div>
+              <span className="font-mono text-[11px] text-white/50">join-the-collective.sh</span>
+              <span />
             </div>
-            <span className="font-mono text-[11px] text-white/50">join-the-collective.sh</span>
-            <span />
-          </div>
-          <div className="px-6 py-10 text-center sm:px-10 sm:py-14">
-            <p className="font-mono text-sm text-emerald-300">
-              $ aura init <span className="text-white/50">--vibes=unicorns</span>
-            </p>
-            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
-              Ready to <span className="bg-gradient-to-r from-yellow-300 to-pink-400 bg-clip-text text-transparent">resonate</span>?
-            </h2>
-            <p className="mx-auto mt-3 max-w-md text-white/70">
-              Join thousands of builders shipping on the open, decentralized web.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link to="/sign-up">
-                <Button
-                  size="lg"
-                  className="gap-2 rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground hover:bg-primary/90"
-                >
-                  $ join --now <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/explore">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="gap-2 rounded-md border-white/20 bg-transparent font-mono text-sm text-white hover:bg-white/10 hover:text-white"
-                >
-                  <GitBranch className="h-4 w-4" /> fork the org
-                </Button>
-              </Link>
+            <div className="px-6 py-10 text-center sm:px-10 sm:py-14">
+              <p className="font-mono text-sm text-emerald-300">
+                $ aura init <span className="text-white/50">--vibes=unicorns</span>
+              </p>
+              <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Ready to <span className="bg-gradient-to-r from-gold via-pink-soft to-lavender bg-clip-text text-transparent">resonate</span>? 🦄
+              </h2>
+              <p className="mx-auto mt-3 max-w-md text-white/70">
+                Join thousands of builders shipping on the open, decentralized web.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Link to="/sign-up">
+                  <Button
+                    size="lg"
+                    className="gap-2 rounded-full bg-gold font-mono text-sm font-bold text-foreground hover:bg-gold/90"
+                  >
+                    $ join --now <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/explore">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="gap-2 rounded-full border-white/20 bg-transparent font-mono text-sm text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <GitBranch className="h-4 w-4" /> fork the org
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

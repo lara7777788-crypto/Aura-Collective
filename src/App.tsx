@@ -23,6 +23,7 @@ import Refunds from "./pages/Refunds";
 import Unsubscribe from "./pages/Unsubscribe";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import VelaWatermark from "./components/VelaWatermark";
 import { AuthProvider } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -35,6 +36,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <VelaWatermark />
         <AuthProvider>
           <Routes>
             <Route element={<Layout />}>

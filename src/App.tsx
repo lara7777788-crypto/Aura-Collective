@@ -15,6 +15,9 @@ import Dashboard from "./pages/Dashboard";
 import Billing from "./pages/Billing";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Refunds from "./pages/Refunds";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -42,6 +45,9 @@ const App = () => (
               <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
               <Route path="/about" element={<About />} />
               <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/refunds" element={<Refunds />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

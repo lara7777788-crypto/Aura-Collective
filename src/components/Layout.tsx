@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { PaymentTestModeBanner } from "./PaymentTestModeBanner";
 import SiteSparkles from "./SiteSparkles";
 import StarlitFaerie from "./StarlitFaerie";
+import StarlitHelp from "./StarlitHelp";
 
 const Layout = () => (
   <div className="relative flex min-h-screen flex-col">
@@ -15,6 +16,7 @@ const Layout = () => (
     </main>
     <Footer />
     <StarlitFaerie />
+    <StarlitHelp />
   </div>
 );
 

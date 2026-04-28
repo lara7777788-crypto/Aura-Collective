@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,25 +16,61 @@ const ResetPassword = () => {
   const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
+  const [linkError, setLinkError] = useState("");
 
   useEffect(() => {
-    // Supabase parses the recovery token from the URL hash and creates a temp session.
-    // Listen for that, and also fall back to checking the session directly.
-    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || session) {
-        setReady(true);
+    let mounted = true;
+
+    const markReady = () => {
+      if (!mounted) return;
+      setReady(true);
+      setLinkError("");
+    };
+
+    const validateRecoverySession = async () => {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const errorDescription = params.get("error_description") || params.get("error");
+      const accessToken = params.get("access_token");
+      const refreshToken = params.get("refresh_token");
+
+      if (errorDescription) {
+        if (mounted) setLinkError(errorDescription.replace(/\+/g, " "));
+        return;
       }
+
+      if (accessToken && refreshToken) {
+        const { error } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        });
+        if (!mounted) return;
+        if (error) {
+          setLinkError(error.message);
+          return;
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+        markReady();
+        return;
+      }
+
+      const { data } = await supabase.auth.getSession();
+      if (!mounted) return;
+      if (data.session) {
+        markReady();
+      } else {
+        setLinkError("This reset link is missing or expired. Please request a fresh password reset email.");
+      }
+    };
+
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) markReady();
     });
-    // Initial check (in case the event already fired before mount)
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setReady(true);
-    });
-    // Safety fallback: enable the form after 2s regardless,
-    // so the user is never stuck. updateUser will return a clear error if no session.
-    const t = setTimeout(() => setReady(true), 2000);
+
+    validateRecoverySession();
+
     return () => {
+      mounted = false;
       sub.subscription.unsubscribe();
-      clearTimeout(t);
     };
   }, []);
 
@@ -67,10 +103,15 @@ const ResetPassword = () => {
           <div className="mx-auto"><Logo size="md" /></div>
           <CardTitle className="font-serif italic">Set a new password</CardTitle>
           <CardDescription>
-            {ready ? "Choose a strong new password." : "Validating your reset link…"}
+            {linkError ? linkError : ready ? "Choose a strong new password." : "Validating your reset link…"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {linkError ? (
+            <Button asChild className="w-full rounded-full bg-primary text-primary-foreground font-bold shadow-[4px_4px_0_hsl(var(--foreground))] hover:shadow-[2px_2px_0_hsl(var(--foreground))] hover:translate-x-[2px] hover:translate-y-[2px] transition-all hover:bg-primary">
+              <Link to="/forgot-password">Request a fresh link</Link>
+            </Button>
+          ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="password">New password</Label>
@@ -84,6 +125,7 @@ const ResetPassword = () => {
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Update password"}
             </Button>
           </form>
+          )}
         </CardContent>
       </Card>
     </div>

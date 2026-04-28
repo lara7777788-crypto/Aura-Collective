@@ -11,6 +11,7 @@ import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
 import { toast } from "sonner";
 
 const tierLabels: Record<string, { name: string; price: string }> = {
+  starter: { name: "Starter", price: "$3 / mo" },
   glow: { name: "Glow", price: "$9 / mo" },
   constellation: { name: "Constellation", price: "$29 / mo" },
 };

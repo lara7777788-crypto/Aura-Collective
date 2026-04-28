@@ -149,3 +149,9 @@
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }
+
+/* ---- Site-wide sparkle pinpoints ---- */
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.7); }
+  50% { opacity: 0.85; transform: scale(1.15); }
+}

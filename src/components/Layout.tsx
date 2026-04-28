@@ -2,9 +2,11 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { PaymentTestModeBanner } from "./PaymentTestModeBanner";
+import SiteSparkles from "./SiteSparkles";
 
 const Layout = () => (
-  <div className="flex min-h-screen flex-col">
+  <div className="relative flex min-h-screen flex-col">
+    <SiteSparkles />
     <PaymentTestModeBanner />
     <Navbar />
     <main className="flex-1">

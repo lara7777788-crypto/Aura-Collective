@@ -13,7 +13,7 @@ const codeLines = [
   { n: 1, content: <><span className="text-pink-300">const</span> <span className="text-yellow-200">aura</span> <span className="text-white/60">=</span> <span className="text-pink-300">await</span> <span className="text-cyan-200">collective</span><span className="text-white/60">.</span><span className="text-cyan-200">ship</span><span className="text-white/60">({'{'}</span></> },
   { n: 2, content: <>  <span className="text-cyan-200">model</span><span className="text-white/60">:</span> <span className="text-emerald-200">'aura-llm-7b'</span><span className="text-white/60">,</span></> },
   { n: 3, content: <>  <span className="text-cyan-200">license</span><span className="text-white/60">:</span> <span className="text-emerald-200">'open'</span><span className="text-white/60">,</span></> },
-  { n: 4, content: <>  <span className="text-cyan-200">vibes</span><span className="text-white/60">:</span> <span className="text-emerald-200">'unicorns'</span> <span className="text-white/40">// 🦄</span></> },
+  { n: 4, content: <>  <span className="text-cyan-200">vibes</span><span className="text-white/60">:</span> <span className="text-emerald-200">'cosmic'</span> <span className="text-white/40">// 🪐</span></> },
   { n: 5, content: <><span className="text-white/60">{'})'}</span></> },
   { n: 6, content: <></> },
   { n: 7, content: <><span className="text-white/40">{'// → shipped to mainnet ✨'}</span></> },
@@ -78,7 +78,7 @@ const Hero = () => (
               style={{ background: "hsl(var(--gold))" }}
             />
           </span>
-          . <span className="inline-block">🦄</span>
+          . <span className="inline-block">✦</span>
         </motion.h1>
 
         <motion.p
@@ -132,7 +132,7 @@ const Hero = () => (
           {[
             { icon: Star, label: "12.4k stars", bg: "bg-gold/40 border-gold" },
             { icon: GitBranch, label: "3.2k repos", bg: "bg-lavender/40 border-lavender" },
-            { icon: Sparkles, label: "MIT licensed 🦄", bg: "bg-pink-soft/40 border-pink-soft" },
+            { icon: Sparkles, label: "MIT licensed ✧", bg: "bg-pink-soft/40 border-pink-soft" },
           ].map((s) => (
             <div
               key={s.label}

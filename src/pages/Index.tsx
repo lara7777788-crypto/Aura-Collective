@@ -91,16 +91,16 @@ const Index = () => {
     <>
       <Hero />
 
-      {/* Stats — terminal strip */}
-      <section className="border-b bg-background">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      {/* Stats — soft teal strip */}
+      <section className="bg-teal/40">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="font-mono">
                 <p className="text-2xl font-bold text-foreground sm:text-3xl">
-                  <span className="text-secondary">$</span> {s.value}
+                  <span className="text-foreground/40">✦</span> {s.value}
                 </p>
-                <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+                <p className="mt-1 text-xs uppercase tracking-wider text-foreground/60">
                   {s.label}
                 </p>
               </div>
@@ -109,55 +109,57 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pillars */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-        <div className="mb-14 max-w-2xl">
-          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-secondary">
-            // the stack
-          </p>
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            One platform for{" "}
-            <span className="font-mono text-secondary">{"<models />"}</span>,{" "}
-            <span className="font-mono text-secondary">{"<code />"}</span>, and{" "}
-            <span className="font-mono text-secondary">{"<datasets />"}</span>.
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            Built for the decentralized era. CLI-first, browser-friendly, and made to play nice
-            with the tools you already love.
-          </p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-3">
-          {pillars.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              custom={i}
-            >
-              <Card className="group h-full border border-border transition-all hover:-translate-y-1 hover:border-foreground hover:shadow-[6px_6px_0_hsl(var(--foreground))]">
-                <CardHeader>
-                  <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-foreground ${p.accent}`}>
-                    <p.icon className="h-5 w-5" strokeWidth={2.2} />
-                  </div>
-                  <CardTitle className="font-mono text-lg lowercase">{p.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <CardDescription className="text-sm leading-relaxed">{p.desc}</CardDescription>
-                  <div className="flex items-center gap-2 rounded-md border border-border bg-muted/60 px-3 py-2 font-mono text-[12px] text-foreground/80">
-                    <Terminal className="h-3.5 w-3.5 text-secondary shrink-0" />
-                    <code className="truncate">{p.cmd}</code>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+      {/* Pillars — white */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+          <div className="mb-14 max-w-2xl">
+            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-foreground/50">
+              ✦ the stack
+            </p>
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+              One platform for{" "}
+              <span className="font-mono text-foreground bg-gold/50 px-1.5 rounded">{"<models />"}</span>,{" "}
+              <span className="font-mono text-foreground bg-lavender/60 px-1.5 rounded">{"<code />"}</span>, and{" "}
+              <span className="font-mono text-foreground bg-pink-soft/60 px-1.5 rounded">{"<datasets />"}</span>.
+            </h2>
+            <p className="mt-3 text-foreground/60">
+              Built for the decentralized era. CLI-first, browser-friendly, and made to play nice
+              with the tools you already love.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {pillars.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+              >
+                <Card className="group h-full rounded-2xl border-2 border-lavender/60 bg-white transition-all hover:-translate-y-1 hover:border-lavender hover:shadow-[6px_6px_0_hsl(var(--lavender))]">
+                  <CardHeader>
+                    <div className={`mb-3 flex h-12 w-12 items-center justify-center rounded-xl ${p.iconBg} text-foreground`}>
+                      <p.icon className="h-5 w-5" strokeWidth={2.2} />
+                    </div>
+                    <CardTitle className="font-mono text-lg lowercase text-foreground">{p.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <CardDescription className="text-sm leading-relaxed text-foreground/70">{p.desc}</CardDescription>
+                    <div className="flex items-center gap-2 rounded-lg border border-lavender/40 bg-lavender/10 px-3 py-2 font-mono text-[12px] text-foreground/80">
+                      <Terminal className="h-3.5 w-3.5 text-foreground/60 shrink-0" />
+                      <code className="truncate">{p.cmd}</code>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Trending OSS from GitHub */}
-      <section className="border-t bg-background">
+      {/* Trending OSS from GitHub — soft teal */}
+      <section className="bg-teal/30">
         <TrendingRepos months={12} />
       </section>
 
